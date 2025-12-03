@@ -29,7 +29,13 @@ const gameSettings = {
 
 // Apply theme from settings
 (function applyTheme() {
-    const theme = loadedSettings?.theme ?? 'retro-vaporwave';
+    let theme = loadedSettings?.theme ?? 'retro-vaporwave';
+    
+    // Handle legacy theme names
+    if (theme === 'classic') {
+        theme = 'retro-vaporwave';
+    }
+    
     const themeLink = document.querySelector('link[href*="themes/"]');
     if (themeLink) {
         themeLink.href = `style/themes/${theme}.css`;

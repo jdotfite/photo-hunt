@@ -31,6 +31,7 @@ document.addEventListener("DOMContentLoaded", function() {
     let searchTimerInterval;
     let roundTimerInterval;
     let hintWiggleTriggered = false; // Track if hint wiggle has been shown this round
+    let gameActive = false; // Track if game is actively running (prevents timer updates after game over)
 
     // Audio
     let audioContext;
@@ -167,11 +168,21 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     function startTimers() {
+        gameActive = true;
         searchTimerInterval = setInterval(updateSearchTimer, gameSettings.countdownRate);
         roundTimerInterval = setInterval(updateRoundTimer, 1000); // Update the round timer every second
     }
 
+    function stopGame() {
+        gameActive = false;
+        clearInterval(searchTimerInterval);
+        clearInterval(roundTimerInterval);
+        disableClicks();
+    }
+
     function updateSearchTimer() {
+        if (!gameActive) return; // Don't update if game is not active
+        
         if (searchTimerValue > searchTimeMin) {
             searchTimerValue -= 1; // Decrement by 1 (like original game)
             searchTimerValueElement.textContent = searchTimerValue;
@@ -182,6 +193,8 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     function updateRoundTimer() {
+        if (!gameActive) return; // Don't update if game is not active
+        
         if (timeLeft > 0) {
             timeLeft--;
             const activePellets = Math.ceil(timeLeft / (roundTime / gameSettings.numPellets));
@@ -194,9 +207,7 @@ document.addEventListener("DOMContentLoaded", function() {
             }
 
             if (timeLeft <= 0) {
-                clearInterval(searchTimerInterval);
-                clearInterval(roundTimerInterval);
-                disableClicks();
+                stopGame(); // Stop the game and clear all timers
                 playOutOfTimeSound();
                 
                 // Game Over Sequence:
@@ -315,6 +326,19 @@ document.addEventListener("DOMContentLoaded", function() {
             ctx.stroke();
         }
         imageElement.parentElement.appendChild(canvas);
+        
+        // Add shake animation to both image wrappers
+        const wrappers = document.querySelectorAll('.image-wrapper');
+        wrappers.forEach(wrapper => {
+            wrapper.classList.remove('shake');
+            // Force reflow to restart animation
+            void wrapper.offsetWidth;
+            wrapper.classList.add('shake');
+            wrapper.addEventListener('animationend', () => {
+                wrapper.classList.remove('shake');
+            }, { once: true });
+        });
+        
         reduceRoundTime(10);
         playMissSound();
     }
@@ -350,9 +374,7 @@ document.addEventListener("DOMContentLoaded", function() {
         updatePelletDisplay(activePellets);
 
         if (timeLeft <= 0) {
-            clearInterval(searchTimerInterval);
-            clearInterval(roundTimerInterval);
-            disableClicks();
+            stopGame(); // Stop the game and clear all timers
             playOutOfTimeSound();
             
             // Game Over Sequence:
@@ -393,6 +415,11 @@ document.addEventListener("DOMContentLoaded", function() {
                 updateDifferencesFoundDisplay();
                 updateScore(searchTimerValue);
                 playCorrectSound();
+                
+                // Create ripple effect on both images
+                createRippleEffect(imageElement, clickX, clickY);
+                createRippleEffect(otherImageElement, clickX, clickY);
+                
                 resetSearchTimer(); // Reset the search timer after finding a difference
                 if (differencesFound === totalDifferences) {
                     endRound();
@@ -405,6 +432,27 @@ document.addEventListener("DOMContentLoaded", function() {
         if (!found) {
             markIncorrect(clickX, clickY, imageElement);
         }
+    }
+    
+    function createRippleEffect(imageElement, x, y) {
+        const wrapper = imageElement.parentElement;
+        const imgRect = imageElement.getBoundingClientRect();
+        const wrapperRect = wrapper.getBoundingClientRect();
+        
+        // Calculate offset of image within wrapper
+        const offsetLeft = imgRect.left - wrapperRect.left;
+        const offsetTop = imgRect.top - wrapperRect.top;
+        
+        const ripple = document.createElement('div');
+        ripple.className = 'click-ripple';
+        ripple.style.left = (offsetLeft + x) + 'px';
+        ripple.style.top = (offsetTop + y) + 'px';
+        wrapper.appendChild(ripple);
+        
+        // Remove ripple after animation completes
+        ripple.addEventListener('animationend', () => {
+            ripple.remove();
+        });
     }
 
     function highlightDifference(imageElement, diff) {
@@ -437,6 +485,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     function endRound() {
+        gameActive = false; // Pause game activity during round transition
         clearInterval(searchTimerInterval);
         clearInterval(roundTimerInterval);
         playSuccessSound();
@@ -579,6 +628,11 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     function returnToIntro() {
+        // Stop any active game
+        gameActive = false;
+        clearInterval(searchTimerInterval);
+        clearInterval(roundTimerInterval);
+        
         // Reset game state
         round = 0;
         score = 0;
@@ -605,6 +659,11 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     function resetGame() {
+        // Stop any active game
+        gameActive = false;
+        clearInterval(searchTimerInterval);
+        clearInterval(roundTimerInterval);
+        
         round = 0; // Reset to 0 to ensure correct indexing with shuffled sets
         score = 0;
         hintsRemaining = 3;

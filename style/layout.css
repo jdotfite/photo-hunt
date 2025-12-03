@@ -42,7 +42,7 @@
    ============================================ */
 .title-bar {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   flex-shrink: 0;
   padding: var(--gap-sm) var(--gap-md);
@@ -53,8 +53,6 @@
   font-size: 20px;
   font-weight: bold;
   text-transform: uppercase;
-  position: absolute;
-  left: var(--gap-md);
 }
 
 .title-bar .high-score-display {
