@@ -1,0 +1,397 @@
+/* ============================================
+   VIRTUAL KEYBOARD - 90s Arcade Style
+   Inspired by Megatouch/Photo Hunt arcade
+   ============================================ */
+
+/* Overlay */
+.keyboard-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.keyboard-overlay.keyboard-visible {
+    opacity: 1;
+}
+
+.keyboard-overlay.keyboard-closing {
+    opacity: 0;
+}
+
+/* Main Container */
+.keyboard-container {
+    background: linear-gradient(180deg, 
+        #faf3e0 0%, 
+        #f5e6d3 30%, 
+        #e8dfd0 70%,
+        #f5e6d3 100%
+    );
+    border-radius: 16px;
+    padding: 30px 40px 35px;
+    border: 5px solid #2d2d2d;
+    box-shadow: 
+        10px 10px 0 #2d2d2d,
+        inset 0 0 0 4px #fff8dc,
+        inset 0 0 40px rgba(255, 182, 193, 0.2);
+    max-width: 850px;
+    width: 96%;
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
+}
+
+.keyboard-visible .keyboard-container {
+    transform: scale(1);
+}
+
+.keyboard-closing .keyboard-container {
+    transform: scale(0.9);
+}
+
+/* Header - Title Area */
+.keyboard-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 8px;
+}
+
+.keyboard-title {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 15px;
+    line-height: 1;
+}
+
+.keyboard-title .title-photo {
+    font-family: var(--font-display, 'Comic Sans MS', cursive);
+    font-size: 48px;
+    font-weight: bold;
+    letter-spacing: 3px;
+    color: #ff69b4;
+    text-shadow: 
+        3px 3px 0 #2d2d2d,
+        -1px -1px 0 #fff,
+        4px 4px 0 rgba(0, 0, 0, 0.2);
+    text-transform: uppercase;
+}
+
+.keyboard-title .title-hunt {
+    font-family: var(--font-display, 'Comic Sans MS', cursive);
+    font-size: 48px;
+    font-weight: bold;
+    letter-spacing: 3px;
+    color: #ffe135;
+    text-shadow: 
+        3px 3px 0 #2d2d2d,
+        -1px -1px 0 #fff,
+        4px 4px 0 rgba(0, 0, 0, 0.2);
+    text-transform: uppercase;
+}
+
+/* Subtitle - Rank & High Score Label */
+.keyboard-subtitle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.keyboard-rank {
+    font-family: var(--font-display, 'Fredoka', sans-serif);
+    font-size: 32px;
+    font-weight: bold;
+    color: #c4a000;
+    text-shadow: 
+        2px 2px 0 #8a7000,
+        -1px -1px 0 #ffe066,
+        3px 3px 6px rgba(0, 0, 0, 0.3);
+}
+
+.keyboard-highscore-label {
+    font-family: var(--font-display, 'Comic Sans MS', cursive);
+    font-size: 18px;
+    font-weight: bold;
+    color: #2d2d2d;
+    background: linear-gradient(180deg, #98fb98 0%, #6bcb77 100%);
+    padding: 8px 20px;
+    border-radius: 20px;
+    border: 3px solid #2d2d2d;
+    box-shadow: 3px 3px 0 #2d2d2d;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Legacy badge - hidden now */
+.keyboard-game-badge {
+    display: none;
+}
+
+/* Input Display Row */
+.keyboard-input-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(180deg, #a8e6ff 0%, #b2f5ea 50%, #fff59d 100%);
+    border-radius: 12px;
+    padding: 16px 25px;
+    margin-bottom: 22px;
+    border: 3px solid #2d2d2d;
+    box-shadow: 
+        4px 4px 0 #2d2d2d,
+        inset 0 2px 0 rgba(255, 255, 255, 0.5);
+}
+
+.keyboard-input-display {
+    font-family: var(--font-pixel, 'Courier New', monospace);
+    font-size: 36px;
+    font-weight: bold;
+    letter-spacing: 5px;
+    color: #2d2d2d;
+}
+
+.keyboard-input-display .entered {
+    color: #2d2d2d;
+}
+
+.keyboard-input-display .placeholder {
+    color: #888;
+    opacity: 0.6;
+}
+
+.keyboard-score {
+    font-family: var(--font-pixel, 'Courier New', monospace);
+    font-size: 36px;
+    font-weight: bold;
+    color: #2d2d2d;
+    background: #b2f5ea;
+    padding: 6px 16px;
+    border-radius: 8px;
+    border: 2px solid #2d2d2d;
+}
+
+/* Keyboard Keys Container */
+.keyboard-keys {
+    background: linear-gradient(180deg, #b2f5ea 0%, #8ce0d6 50%, #b2f5ea 100%);
+    border-radius: 12px;
+    padding: 20px 15px;
+    margin-bottom: 18px;
+    border: 3px solid #2d2d2d;
+    box-shadow: 
+        4px 4px 0 #2d2d2d,
+        inset 0 2px 0 rgba(255, 255, 255, 0.5);
+}
+
+.keyboard-row {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.keyboard-row:last-child {
+    margin-bottom: 0;
+}
+
+/* Individual Keys */
+.keyboard-key {
+    font-family: var(--font-display, 'Comic Sans MS', cursive);
+    font-size: 28px;
+    font-weight: bold;
+    color: #2d2d2d;
+    background: linear-gradient(180deg, 
+        #ffffff 0%, 
+        #f8f8f8 20%,
+        #f0f0f0 50%,
+        #f8f8f8 80%,
+        #ffffff 100%
+    );
+    border: 3px solid #2d2d2d;
+    border-radius: 10px;
+    width: 68px;
+    height: 68px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 
+        4px 4px 0 #2d2d2d,
+        inset 0 2px 0 rgba(255, 255, 255, 0.8);
+    transition: all 0.1s ease;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.keyboard-key:hover {
+    background: linear-gradient(180deg, 
+        #fff59d 0%, 
+        #ffe135 50%,
+        #fff59d 100%
+    );
+    transform: translateY(-2px);
+    box-shadow: 
+        5px 6px 0 #2d2d2d,
+        inset 0 2px 0 rgba(255, 255, 255, 0.8);
+}
+
+.keyboard-key:active {
+    transform: translateY(2px);
+    box-shadow: 
+        1px 1px 0 #2d2d2d,
+        inset 0 2px 0 rgba(255, 255, 255, 0.5);
+}
+
+/* Action Keys Row */
+.keyboard-actions {
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+}
+
+.keyboard-key-backspace {
+    width: 100px;
+    height: 68px;
+    background: linear-gradient(180deg, #ffb6c1 0%, #ff69b4 50%, #ffb6c1 100%);
+    color: #fff;
+}
+
+.keyboard-key-backspace svg {
+    color: #fff;
+    width: 32px;
+    height: 32px;
+}
+
+.keyboard-key-backspace:hover {
+    background: linear-gradient(180deg, #ff69b4 0%, #ff1493 50%, #ff69b4 100%);
+}
+
+.keyboard-key-space {
+    width: 220px;
+    height: 68px;
+    font-size: 22px;
+    letter-spacing: 3px;
+}
+
+.keyboard-key-done {
+    width: 160px;
+    height: 68px;
+    font-size: 22px;
+    gap: 10px;
+    background: linear-gradient(180deg, 
+        #4ecdc4 0%, 
+        #26a69a 50%,
+        #4ecdc4 100%
+    );
+    color: #fff;
+}
+
+.keyboard-key-done svg {
+    color: #fff;
+    width: 26px;
+    height: 26px;
+}
+
+.keyboard-key-done:hover {
+    background: linear-gradient(180deg, 
+        #26a69a 0%, 
+        #1e8c82 50%,
+        #26a69a 100%
+    );
+    box-shadow: 
+        4px 5px 0 #2d2d2d,
+        inset 0 2px 0 rgba(255, 255, 255, 0.4);
+}
+
+.keyboard-key-done:active {
+    box-shadow: 
+        1px 1px 0 #2d2d2d,
+        inset 0 2px 0 rgba(255, 255, 255, 0.5);
+}
+
+/* Responsive adjustments */
+@media (max-width: 700px) {
+    .keyboard-container {
+        padding: 20px 12px;
+    }
+    
+    .keyboard-title .title-photo,
+    .keyboard-title .title-hunt {
+        font-size: 32px;
+    }
+    
+    .keyboard-rank {
+        font-size: 24px;
+    }
+    
+    .keyboard-highscore-label {
+        font-size: 14px;
+        padding: 6px 14px;
+    }
+    
+    .keyboard-key {
+        width: 48px;
+        height: 56px;
+        font-size: 22px;
+        border-radius: 8px;
+    }
+    
+    .keyboard-row {
+        gap: 6px;
+        margin-bottom: 8px;
+    }
+    
+    .keyboard-key-backspace {
+        width: 70px;
+        height: 56px;
+    }
+    
+    .keyboard-key-space {
+        width: 150px;
+        height: 56px;
+        font-size: 16px;
+    }
+    
+    .keyboard-key-done {
+        width: 110px;
+        height: 56px;
+        font-size: 16px;
+    }
+    
+    .keyboard-input-display {
+        font-size: 24px;
+        letter-spacing: 3px;
+    }
+    
+    .keyboard-score {
+        font-size: 26px;
+    }
+}
+
+/* Scanline effect for retro feel */
+.keyboard-overlay::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0, 0, 0, 0.02) 2px,
+        rgba(0, 0, 0, 0.02) 4px
+    );
+    pointer-events: none;
+}

@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Photo Hunt - Admin Settings</title>
+  <!-- Google Fonts for preview -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Fredoka:wght@400;600;700&family=Patrick+Hand&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --admin-bg: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      --card-bg: rgba(255, 255, 255, 0.05);
+      --card-border: rgba(255, 255, 255, 0.1);
+      --accent: #ff71ce;
+      --accent-secondary: #01cdfe;
+      --text: #ffffff;
+      --text-muted: #a0a0a0;
+      --success: #05ffa1;
+      --warning: #ffb347;
+      --danger: #ff6b6b;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: var(--admin-bg);
+      min-height: 100vh;
+      color: var(--text);
+      padding: 20px;
+    }
+
+    .admin-container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    /* Header */
+    .admin-header {
+      text-align: center;
+      margin-bottom: 30px;
+      padding: 30px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      backdrop-filter: blur(10px);
+    }
+
+    .admin-header h1 {
+      font-size: 2.5rem;
+      background: linear-gradient(90deg, var(--accent), var(--accent-secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 10px;
+    }
+
+    .admin-header p {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+    }
+
+    /* Cards */
+    .settings-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 25px;
+      margin-bottom: 20px;
+      backdrop-filter: blur(10px);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .settings-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 40px rgba(255, 113, 206, 0.1);
+    }
+
+    .settings-card h2 {
+      font-size: 1.3rem;
+      margin-bottom: 20px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid var(--card-border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .settings-card h2 .icon {
+      font-size: 1.5rem;
+    }
+
+    /* Form Groups */
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group:last-child {
+      margin-bottom: 0;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    label small {
+      display: block;
+      color: var(--text-muted);
+      font-weight: normal;
+      font-size: 0.85rem;
+      margin-top: 4px;
+    }
+
+    input[type="number"],
+    input[type="text"],
+    select {
+      width: 100%;
+      padding: 12px 16px;
+      font-size: 1rem;
+      background: rgba(0, 0, 0, 0.3);
+      border: 2px solid var(--card-border);
+      border-radius: 8px;
+      color: var(--text);
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    input[type="number"]:focus,
+    input[type="text"]:focus,
+    select:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(255, 113, 206, 0.2);
+    }
+
+    select {
+      cursor: pointer;
+    }
+
+    select option {
+      background: #1a1a2e;
+      color: var(--text);
+    }
+
+    /* Toggle Switch */
+    .toggle-group {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 15px;
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 8px;
+      margin-bottom: 15px;
+    }
+
+    .toggle-group:last-child {
+      margin-bottom: 0;
+    }
+
+    .toggle-label {
+      margin-bottom: 0;
+    }
+
+    .toggle-switch {
+      position: relative;
+      width: 60px;
+      height: 30px;
+    }
+
+    .toggle-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .toggle-slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.4);
+      border: 2px solid var(--card-border);
+      border-radius: 30px;
+      transition: 0.3s;
+    }
+
+    .toggle-slider::before {
+      position: absolute;
+      content: "";
+      height: 22px;
+      width: 22px;
+      left: 2px;
+      bottom: 2px;
+      background: var(--text);
+      border-radius: 50%;
+      transition: 0.3s;
+    }
+
+    .toggle-switch input:checked + .toggle-slider {
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+
+    .toggle-switch input:checked + .toggle-slider::before {
+      transform: translateX(30px);
+    }
+
+    /* Theme Cards */
+    .theme-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .theme-card {
+      padding: 20px;
+      border: 3px solid var(--card-border);
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .theme-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .theme-card.active {
+      border-color: var(--accent);
+      box-shadow: 0 0 20px rgba(255, 113, 206, 0.3);
+    }
+
+    .theme-card.active::after {
+      content: '✓';
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 28px;
+      height: 28px;
+      background: var(--accent);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+    }
+
+    .theme-preview {
+      height: 100px;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .theme-card-classic .theme-preview {
+      background: linear-gradient(180deg, #eae7da 0%, #d4d0c4 100%);
+    }
+
+    .theme-card-classic .theme-preview::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 40px;
+      background: #4d2233;
+      border-radius: 4px;
+      margin: 10px;
+    }
+
+    .theme-card-vaporwave .theme-preview {
+      background: linear-gradient(180deg, #667eea 0%, #764ba2 50%, #ff71ce 100%);
+    }
+
+    .theme-card-vaporwave .theme-preview::before {
+      content: '';
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      right: 10px;
+      height: 20px;
+      background: linear-gradient(90deg, #000080 0%, #b967ff 100%);
+    }
+
+    .theme-card-vaporwave .theme-preview::after {
+      content: '';
+      position: absolute;
+      bottom: 10px;
+      left: 10px;
+      right: 10px;
+      height: 50px;
+      background: #c0c0c0;
+      border: 2px solid;
+      border-color: #fff #808080 #808080 #fff;
+    }
+
+    .theme-name {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 5px;
+    }
+
+    .theme-desc {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    /* Font Cards */
+    .font-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+    }
+
+    .font-card {
+      padding: 20px;
+      border: 3px solid var(--card-border);
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+      position: relative;
+      text-align: center;
+    }
+
+    .font-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .font-card.active {
+      border-color: var(--accent-secondary);
+      box-shadow: 0 0 20px rgba(1, 205, 254, 0.3);
+    }
+
+    .font-card.active::after {
+      content: '✓';
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 24px;
+      height: 24px;
+      background: var(--accent-secondary);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 12px;
+    }
+
+    .font-preview {
+      font-size: 2rem;
+      margin-bottom: 10px;
+      padding: 15px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+    }
+
+    .font-card[data-font="fredoka"] .font-preview {
+      font-family: 'Fredoka', sans-serif;
+    }
+
+    .font-card[data-font="bangers"] .font-preview {
+      font-family: 'Bangers', cursive;
+    }
+
+    .font-card[data-font="patrick-hand"] .font-preview {
+      font-family: 'Patrick Hand', cursive;
+    }
+
+    .font-card[data-font="default"] .font-preview {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .font-name {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 5px;
+    }
+
+    .font-desc {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    /* Buttons */
+    .button-group {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin-top: 30px;
+    }
+
+    .btn {
+      padding: 14px 28px;
+      font-size: 1rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent) 0%, #b967ff 100%);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(255, 113, 206, 0.4);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--text);
+      border: 2px solid var(--card-border);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.2);
+      border-color: var(--text-muted);
+    }
+
+    .btn-success {
+      background: linear-gradient(135deg, var(--success) 0%, #00b894 100%);
+      color: #1a1a2e;
+    }
+
+    .btn-success:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(5, 255, 161, 0.3);
+    }
+
+    /* Status Messages */
+    .status-message {
+      padding: 15px 20px;
+      border-radius: 8px;
+      margin-top: 20px;
+      display: none;
+      align-items: center;
+      gap: 10px;
+      animation: slideIn 0.3s ease-out;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .status-message.success {
+      display: flex;
+      background: rgba(5, 255, 161, 0.1);
+      border: 1px solid var(--success);
+      color: var(--success);
+    }
+
+    .status-message.error {
+      display: flex;
+      background: rgba(255, 107, 107, 0.1);
+      border: 1px solid var(--danger);
+      color: var(--danger);
+    }
+
+    /* Sound Files Section */
+    .sound-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .sound-item {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      padding: 12px 15px;
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 8px;
+    }
+
+    .sound-item label {
+      margin: 0;
+      min-width: 120px;
+      font-size: 0.9rem;
+    }
+
+    .sound-item input {
+      flex: 1;
+    }
+
+    .sound-item .btn-play {
+      padding: 8px 12px;
+      font-size: 0.85rem;
+      background: var(--accent-secondary);
+      color: #1a1a2e;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .sound-item .btn-play:hover {
+      background: #00e5ff;
+    }
+
+    /* Back Link */
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-muted);
+      text-decoration: none;
+      margin-bottom: 20px;
+      transition: color 0.2s;
+    }
+
+    .back-link:hover {
+      color: var(--accent);
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .admin-header h1 {
+        font-size: 1.8rem;
+      }
+
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+
+      .button-group {
+        flex-direction: column;
+      }
+
+      .btn {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="admin-container">
+    <a href="index.html" class="back-link">← Back to Game</a>
+
+    <div class="admin-header">
+      <h1>Photo Hunt Admin</h1>
+      <p>Configure game settings and customize your experience</p>
+    </div>
+
+    <!-- Theme Selection -->
+    <div class="settings-card">
+      <h2><span class="icon">🎨</span> Theme Selection</h2>
+      <div class="theme-grid">
+        <div class="theme-card theme-card-classic" data-theme="classic" onclick="selectTheme('classic')">
+          <div class="theme-preview"></div>
+          <div class="theme-name">Classic</div>
+          <div class="theme-desc">Clean, minimal design with soft earth tones</div>
+        </div>
+        <div class="theme-card theme-card-vaporwave" data-theme="retro-vaporwave" onclick="selectTheme('retro-vaporwave')">
+          <div class="theme-preview"></div>
+          <div class="theme-name">Retro Vaporwave</div>
+          <div class="theme-desc">90s Windows aesthetic with neon colors</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Font Selection -->
+    <div class="settings-card">
+      <h2><span class="icon">✏️</span> Font Selection</h2>
+      <div class="font-grid">
+        <div class="font-card" data-font="default" onclick="selectFont('default')">
+          <div class="font-preview">SCORE 999</div>
+          <div class="font-name">Default</div>
+          <div class="font-desc">Clean system font</div>
+        </div>
+        <div class="font-card" data-font="fredoka" onclick="selectFont('fredoka')">
+          <div class="font-preview">SCORE 999</div>
+          <div class="font-name">Fredoka</div>
+          <div class="font-desc">Rounded, friendly, great for games</div>
+        </div>
+        <div class="font-card" data-font="bangers" onclick="selectFont('bangers')">
+          <div class="font-preview">SCORE 999</div>
+          <div class="font-name">Bangers</div>
+          <div class="font-desc">Bold comic book style</div>
+        </div>
+        <div class="font-card" data-font="patrick-hand" onclick="selectFont('patrick-hand')">
+          <div class="font-preview">SCORE 999</div>
+          <div class="font-name">Patrick Hand</div>
+          <div class="font-desc">Handwritten but clean</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Display Settings -->
+    <div class="settings-card">
+      <h2><span class="icon">🖥️</span> Display Settings</h2>
+      <div class="toggle-group">
+        <label class="toggle-label">
+          4:3 Display Mode
+          <small>Optimized for arcade/CRT displays with minimal padding</small>
+        </label>
+        <label class="toggle-switch">
+          <input type="checkbox" id="display43Mode">
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+      <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 10px;">
+        Enable this for arcade cabinets or 4:3 aspect ratio monitors. Disables padding for maximum image size.
+      </p>
+    </div>
+
+    <!-- Timer Settings -->
+    <div class="settings-card">
+      <h2><span class="icon">⏱️</span> Timer Settings</h2>
+      <div class="form-row">
+        <div class="form-group">
+          <label>
+            Search Time
+            <small>Starting countdown value (units)</small>
+          </label>
+          <input type="number" id="searchTime" min="100" max="9999" value="999">
+        </div>
+        <div class="form-group">
+          <label>
+            Minimum Search Time
+            <small>Timer won't go below this value (original game: ~10)</small>
+          </label>
+          <input type="number" id="searchTimeMin" min="10" max="500" value="10">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>
+            Initial Round Time (seconds)
+            <small>Time limit for each round</small>
+          </label>
+          <input type="number" id="initialRoundTime" min="30" max="300" value="120">
+        </div>
+        <div class="form-group">
+          <label>
+            Countdown Rate (ms)
+            <small>How fast the search timer decrements</small>
+          </label>
+          <input type="number" id="countdownRate" min="500" max="10000" step="100" value="3000">
+        </div>
+      </div>
+    </div>
+
+    <!-- Difficulty Settings -->
+    <div class="settings-card">
+      <h2><span class="icon">📈</span> Difficulty Settings</h2>
+      <div class="form-row">
+        <div class="form-group">
+          <label>
+            Round Time Reduction (%)
+            <small>Time reduction per round (0.05 = 5%)</small>
+          </label>
+          <input type="number" id="roundTimeReduction" min="0" max="0.5" step="0.01" value="0.05">
+        </div>
+        <div class="form-group">
+          <label>
+            Minimum Round Time Factor
+            <small>Minimum % of initial time (0.15 = 15%)</small>
+          </label>
+          <input type="number" id="minRoundTimeFactor" min="0.1" max="1" step="0.05" value="0.15">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>
+            Number of Pellets
+            <small>Visual segments in the timer bar</small>
+          </label>
+          <input type="number" id="numPellets" min="10" max="100" value="40">
+        </div>
+      </div>
+    </div>
+
+    <!-- Debug Options -->
+    <div class="settings-card">
+      <h2><span class="icon">🔧</span> Debug Options</h2>
+      <div class="toggle-group">
+        <label class="toggle-label">
+          Show Red Outlines
+          <small>Display red boxes around difference areas</small>
+        </label>
+        <label class="toggle-switch">
+          <input type="checkbox" id="showRedOutlines">
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+      <div class="toggle-group">
+        <label class="toggle-label">
+          Show Blue X Marks
+          <small>Display blue X on incorrect clicks</small>
+        </label>
+        <label class="toggle-switch">
+          <input type="checkbox" id="showBlueX">
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Sound Settings -->
+    <div class="settings-card">
+      <h2><span class="icon">🔊</span> Sound Files</h2>
+      <div class="sound-list">
+        <div class="sound-item">
+          <label>Round New</label>
+          <input type="text" id="sound-roundNew" value="audio/round-new.mp3">
+          <button class="btn-play" onclick="playSound('roundNew')">▶ Play</button>
+        </div>
+        <div class="sound-item">
+          <label>Pellet</label>
+          <input type="text" id="sound-pellet" value="audio/pellet.mp3">
+          <button class="btn-play" onclick="playSound('pellet')">▶ Play</button>
+        </div>
+        <div class="sound-item">
+          <label>Success</label>
+          <input type="text" id="sound-success" value="audio/success.mp3">
+          <button class="btn-play" onclick="playSound('success')">▶ Play</button>
+        </div>
+        <div class="sound-item">
+          <label>Miss</label>
+          <input type="text" id="sound-miss" value="audio/miss.mp3">
+          <button class="btn-play" onclick="playSound('miss')">▶ Play</button>
+        </div>
+        <div class="sound-item">
+          <label>Correct</label>
+          <input type="text" id="sound-correct" value="audio/correct.mp3">
+          <button class="btn-play" onclick="playSound('correct')">▶ Play</button>
+        </div>
+        <div class="sound-item">
+          <label>Out of Time</label>
+          <input type="text" id="sound-outOfTime" value="audio/out-of-time.mp3">
+          <button class="btn-play" onclick="playSound('outOfTime')">▶ Play</button>
+        </div>
+        <div class="sound-item">
+          <label>Hint</label>
+          <input type="text" id="sound-hint" value="audio/hint.mp3">
+          <button class="btn-play" onclick="playSound('hint')">▶ Play</button>
+        </div>
+        <div class="sound-item">
+          <label>No (Hint Used)</label>
+          <input type="text" id="sound-no" value="audio/no.mp3">
+          <button class="btn-play" onclick="playSound('no')">▶ Play</button>
+        </div>
+        <div class="sound-item">
+          <label>Hint Bonus</label>
+          <input type="text" id="sound-hintBonus" value="audio/hint-bonus.mp3">
+          <button class="btn-play" onclick="playSound('hintBonus')">▶ Play</button>
+        </div>
+        <div class="sound-item">
+          <label>Game Over Missed</label>
+          <input type="text" id="sound-gameOverMissed" value="audio/game-over-missed.mp3">
+          <button class="btn-play" onclick="playSound('gameOverMissed')">▶ Play</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="button-group">
+      <button class="btn btn-primary" onclick="saveSettings()">
+        💾 Save Settings
+      </button>
+      <button class="btn btn-success" onclick="saveAndPlay()">
+        🎮 Save & Play Game
+      </button>
+      <button class="btn btn-secondary" onclick="resetDefaults()">
+        ↺ Reset to Defaults
+      </button>
+      <button class="btn btn-secondary" onclick="exportSettings()">
+        📤 Export Settings
+      </button>
+    </div>
+
+    <div id="statusMessage" class="status-message"></div>
+  </div>
+
+  <script>
+    // Default settings
+    const defaultSettings = {
+      theme: 'retro-vaporwave',
+      font: 'default',
+      display43Mode: false,
+      searchTime: 999,
+      searchTimeMin: 10,
+      initialRoundTime: 120,
+      roundTimeReduction: 0.05,
+      minRoundTimeFactor: 0.15,
+      countdownRate: 3000,
+      numPellets: 40,
+      showRedOutlines: false,
+      showBlueX: false,
+      sounds: {
+        roundNew: 'audio/round-new.mp3',
+        pellet: 'audio/pellet.mp3',
+        success: 'audio/success.mp3',
+        miss: 'audio/miss.mp3',
+        correct: 'audio/correct.mp3',
+        outOfTime: 'audio/out-of-time.mp3',
+        hint: 'audio/hint.mp3',
+        no: 'audio/no.mp3',
+        hintBonus: 'audio/hint-bonus.mp3',
+        gameOverMissed: 'audio/game-over-missed.mp3'
+      }
+    };
+
+    // Load settings from localStorage or use defaults
+    function loadSettings() {
+      const saved = localStorage.getItem('photoHuntSettings');
+      const settings = saved ? JSON.parse(saved) : defaultSettings;
+      
+      // Populate form fields
+      document.getElementById('searchTime').value = settings.searchTime;
+      document.getElementById('searchTimeMin').value = settings.searchTimeMin;
+      document.getElementById('initialRoundTime').value = settings.initialRoundTime;
+      document.getElementById('roundTimeReduction').value = settings.roundTimeReduction;
+      document.getElementById('minRoundTimeFactor').value = settings.minRoundTimeFactor;
+      document.getElementById('countdownRate').value = settings.countdownRate;
+      document.getElementById('numPellets').value = settings.numPellets;
+      document.getElementById('showRedOutlines').checked = settings.showRedOutlines;
+      document.getElementById('showBlueX').checked = settings.showBlueX;
+      document.getElementById('display43Mode').checked = settings.display43Mode;
+      
+      // Populate sound fields
+      if (settings.sounds) {
+        Object.keys(settings.sounds).forEach(key => {
+          const input = document.getElementById(`sound-${key}`);
+          if (input) input.value = settings.sounds[key];
+        });
+      }
+      
+      // Set active theme
+      selectTheme(settings.theme || 'retro-vaporwave', false);
+      
+      // Set active font
+      selectFont(settings.font || 'default', false);
+    }
+
+    // Select theme
+    function selectTheme(themeName, save = true) {
+      document.querySelectorAll('.theme-card').forEach(card => {
+        card.classList.remove('active');
+      });
+      document.querySelector(`[data-theme="${themeName}"]`).classList.add('active');
+      
+      if (save) {
+        const settings = getFormSettings();
+        settings.theme = themeName;
+        localStorage.setItem('photoHuntSettings', JSON.stringify(settings));
+        showStatus('Theme selected! Click "Save Settings" to apply.', 'success');
+      }
+    }
+
+    // Select font
+    function selectFont(fontName, save = true) {
+      document.querySelectorAll('.font-card').forEach(card => {
+        card.classList.remove('active');
+      });
+      document.querySelector(`[data-font="${fontName}"]`).classList.add('active');
+      
+      if (save) {
+        const settings = getFormSettings();
+        settings.font = fontName;
+        localStorage.setItem('photoHuntSettings', JSON.stringify(settings));
+        showStatus('Font selected! Click "Save Settings" to apply.', 'success');
+      }
+    }
+
+    // Get current form settings
+    function getFormSettings() {
+      const activeTheme = document.querySelector('.theme-card.active');
+      const activeFont = document.querySelector('.font-card.active');
+      return {
+        theme: activeTheme ? activeTheme.dataset.theme : 'retro-vaporwave',
+        font: activeFont ? activeFont.dataset.font : 'default',
+        searchTime: parseInt(document.getElementById('searchTime').value),
+        searchTimeMin: parseInt(document.getElementById('searchTimeMin').value),
+        initialRoundTime: parseInt(document.getElementById('initialRoundTime').value),
+        roundTimeReduction: parseFloat(document.getElementById('roundTimeReduction').value),
+        minRoundTimeFactor: parseFloat(document.getElementById('minRoundTimeFactor').value),
+        countdownRate: parseInt(document.getElementById('countdownRate').value),
+        numPellets: parseInt(document.getElementById('numPellets').value),
+        showRedOutlines: document.getElementById('showRedOutlines').checked,
+        showBlueX: document.getElementById('showBlueX').checked,
+        display43Mode: document.getElementById('display43Mode').checked,
+        sounds: {
+          roundNew: document.getElementById('sound-roundNew').value,
+          pellet: document.getElementById('sound-pellet').value,
+          success: document.getElementById('sound-success').value,
+          miss: document.getElementById('sound-miss').value,
+          correct: document.getElementById('sound-correct').value,
+          outOfTime: document.getElementById('sound-outOfTime').value,
+          hint: document.getElementById('sound-hint').value,
+          no: document.getElementById('sound-no').value,
+          hintBonus: document.getElementById('sound-hintBonus').value,
+          gameOverMissed: document.getElementById('sound-gameOverMissed').value
+        }
+      };
+    }
+
+    // Save settings
+    function saveSettings() {
+      const settings = getFormSettings();
+      localStorage.setItem('photoHuntSettings', JSON.stringify(settings));
+      showStatus('Settings saved successfully! Refresh the game to apply changes.', 'success');
+    }
+
+    // Save and play
+    function saveAndPlay() {
+      saveSettings();
+      window.location.href = 'index.html';
+    }
+
+    // Reset to defaults
+    function resetDefaults() {
+      if (confirm('Are you sure you want to reset all settings to defaults?')) {
+        localStorage.removeItem('photoHuntSettings');
+        loadSettings();
+        showStatus('Settings reset to defaults.', 'success');
+      }
+    }
+
+    // Export settings
+    function exportSettings() {
+      const settings = getFormSettings();
+      const blob = new Blob([JSON.stringify(settings, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'photo-hunt-settings.json';
+      a.click();
+      URL.revokeObjectURL(url);
+      showStatus('Settings exported!', 'success');
+    }
+
+    // Play sound preview
+    function playSound(soundKey) {
+      const input = document.getElementById(`sound-${soundKey}`);
+      if (input && input.value) {
+        const audio = new Audio(input.value);
+        audio.play().catch(err => {
+          showStatus(`Could not play sound: ${err.message}`, 'error');
+        });
+      }
+    }
+
+    // Show status message
+    function showStatus(message, type) {
+      const statusEl = document.getElementById('statusMessage');
+      statusEl.textContent = message;
+      statusEl.className = `status-message ${type}`;
+      
+      setTimeout(() => {
+        statusEl.className = 'status-message';
+      }, 5000);
+    }
+
+    // Initialize on load
+    document.addEventListener('DOMContentLoaded', loadSettings);
+  </script>
+</body>
+
+</html>

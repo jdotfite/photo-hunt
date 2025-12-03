@@ -1,0 +1,1475 @@
+/* ===========================================
+   RETRO VAPORWAVE THEME - Fun 90s OS Style
+   Playful pastels with chunky retro borders
+   Inspired by Y2K aesthetics & cute computer UI
+   =========================================== */
+
+:root {
+  /* Pastel Palette - Fun & Playful */
+  --pastel-pink: #ffb6c1;
+  --pastel-yellow: #fff59d;
+  --pastel-mint: #b2f5ea;
+  --pastel-lavender: #e6d5ff;
+  --pastel-peach: #ffd4a3;
+  --pastel-cream: #fff8dc;
+  --pastel-sky: #a8e6ff;
+  
+  /* Bold Accent Colors */
+  --hot-pink: #ff69b4;
+  --sunny-yellow: #ffe135;
+  --lime-green: #98fb98;
+  --coral: #ff7f7f;
+  --purple: #9b59b6;
+  
+  /* UI Colors - Retro Window Style */
+  --window-bg: #f5e6d3;
+  --window-cream: #faf3e0;
+  --title-bar: #ffcc66;
+  --title-bar-pink: #ffb3d9;
+  --border-dark: #2d2d2d;
+  --border-medium: #4a4a4a;
+  --shadow-color: #2d2d2d;
+  
+  /* Text */
+  --text-dark: #2d2d2d;
+  --text-white: #ffffff;
+  
+  /* Timer Colors */
+  --timer-red: #ff6b6b;
+  --timer-yellow: #ffd93d;
+  --timer-green: #6bcb77;
+  
+  /* Typography */
+  --font-display: 'Comic Sans MS', 'Chalkboard', cursive, sans-serif;
+  --font-system: 'Segoe UI', Tahoma, sans-serif;
+  --font-pixel: 'Courier New', monospace;
+}
+
+/* ============================================
+   BASE STYLES - Cute Pastel Background
+   ============================================ */
+
+html,
+body {
+  background: linear-gradient(135deg, 
+    #fce4ec 0%, 
+    #e8f5e9 25%, 
+    #fff3e0 50%, 
+    #e3f2fd 75%, 
+    #f3e5f5 100%
+  );
+  background-attachment: fixed;
+  font-family: var(--font-system);
+  height: 100%;
+}
+
+/* ============================================
+   CONTAINER
+   ============================================ */
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding: 20px;
+}
+
+/* ============================================
+   GAME WINDOW - Fun Retro Frame
+   ============================================ */
+
+.game {
+  background: var(--window-cream);
+  border-radius: 12px;
+  padding: 0;
+  height: auto;
+  max-height: 95vh;
+  max-width: 920px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  
+  /* Chunky retro border & shadow with full inner highlight */
+  border: 4px solid var(--border-dark);
+  box-shadow: 
+    8px 8px 0 var(--shadow-color),
+    inset 0 0 0 3px var(--pastel-cream);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Window Title Bar - Gradient style */
+.game::before {
+  content: 'PHOTO HUNT - Spot The Difference!';
+  display: flex;
+  align-items: center;
+  background: linear-gradient(90deg, var(--title-bar) 0%, var(--title-bar-pink) 100%);
+  color: var(--text-dark);
+  font-family: var(--font-display);
+  font-weight: bold;
+  font-size: 16px;
+  padding: 10px 15px;
+  border-bottom: 3px solid var(--border-dark);
+  letter-spacing: 0.5px;
+}
+
+/* ============================================
+   4:3 DISPLAY MODE - Arcade/Kiosk Style
+   ============================================ */
+
+body.display-4-3 .container {
+  padding: 0;
+}
+
+body.display-4-3 .game {
+  border-radius: 0;
+  box-shadow: none;
+}
+
+/* Round Display (top right corner) */
+.round-display {
+  position: absolute;
+  top: 8px;
+  right: 15px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-display);
+  color: var(--text-dark);
+  z-index: 10;
+}
+
+.round-display .label {
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+
+.round-display .value {
+  font-size: 18px;
+  font-weight: bold;
+  color: var(--accent-primary);
+}
+
+/* ============================================
+   TITLE BAR - Game Title with High Score
+   Border/shadow/radius handled by utility classes
+   ============================================ */
+
+.title-bar {
+  background: linear-gradient(90deg, var(--title-bar) 0%, var(--title-bar-pink) 100%);
+  margin: 10px 10px 5px 10px;
+}
+
+.title-bar-text {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: bold;
+  color: var(--text-dark);
+  letter-spacing: 2px;
+  text-shadow: 1px 1px 0 rgba(255,255,255,0.5);
+}
+
+.title-bar .high-score-display {
+  background: rgba(255,255,255,0.3);
+  border-radius: 6px;
+  border: 2px solid var(--text-dark);
+}
+
+.title-bar .high-score-display .label {
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: bold;
+  color: var(--text-dark);
+  opacity: 0.85;
+}
+
+.title-bar .high-score-display .value {
+  font-family: var(--font-pixel);
+  font-size: 16px;
+  font-weight: bold;
+  color: var(--text-dark);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.title-bar .high-score-display #highScoreName {
+  font-family: var(--font-display);
+  font-size: 13px;
+  opacity: 0.9;
+  max-width: 70px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ============================================
+   HEADER BAR - Score, Differences, Hints
+   Border/shadow/radius handled by utility classes
+   ============================================ */
+
+.header-bar {
+  background: var(--window-bg);
+  margin: 10px 10px 5px 10px;
+}
+
+.header-bar .label {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: var(--text-dark);
+  opacity: 0.8;
+}
+
+/* Total Score - uses utility classes for border/shadow/radius */
+.total-score {
+  background: var(--pastel-mint);
+  padding: 8px 14px;
+}
+
+.total-score .value {
+  font-family: var(--font-pixel);
+  font-size: 28px;
+  font-weight: bold;
+  color: var(--text-dark);
+}
+
+/* Differences Found - uses utility classes for border/shadow/radius */
+.differences-found {
+  background: var(--pastel-lavender);
+  padding: 8px 14px;
+}
+
+.differences-found .value {
+  font-family: var(--font-pixel);
+  font-size: 24px;
+  font-weight: bold;
+  color: var(--text-dark);
+}
+
+.hints-container .label {
+  margin-right: 6px;
+}
+
+/* Hint Buttons - uses utility classes for border/shadow/radius */
+.hint-btn {
+  width: 38px;
+  height: 38px;
+  background: var(--hot-pink);
+  color: var(--text-white);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.hint-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 3px 4px 0 var(--shadow-color);
+}
+
+.hint-btn:active {
+  transform: translateY(1px);
+  box-shadow: 1px 1px 0 var(--shadow-color);
+}
+
+.hint-btn.used {
+  background: #ccc;
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ============================================
+   TIMER BAR - Unified Time & Points Display
+   Uses utility classes for border/shadow/radius
+   Layout handled by layout.css
+   ============================================ */
+
+.timer-bar {
+  background: linear-gradient(135deg, var(--pastel-sky) 0%, var(--pastel-mint) 50%, var(--pastel-yellow) 100%);
+  margin: 5px 10px 10px 10px;
+}
+
+/* Pellets - chunky with 2px border */
+.pellet {
+  background: #ddd;
+  border: 2px solid var(--border-dark);
+}
+
+.pellet.green {
+  background: linear-gradient(180deg, #a8e6cf 0%, var(--timer-green) 100%);
+}
+
+.pellet.yellow {
+  background: linear-gradient(180deg, #ffeb99 0%, var(--timer-yellow) 100%);
+}
+
+.pellet.red {
+  background: linear-gradient(180deg, #ff9999 0%, var(--timer-red) 100%);
+}
+
+/* Round Score - uses utility classes for border/shadow/radius */
+.round-score {
+  background: var(--sunny-yellow);
+}
+
+.round-score .value {
+  font-family: var(--font-pixel);
+  color: var(--text-dark);
+}
+
+.round-score .label {
+  font-family: var(--font-display);
+  color: var(--text-dark);
+}
+
+/* ============================================
+   TIMER CONTAINER - Top Status Bar (Legacy)
+   ============================================ */
+
+.timer-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--window-bg);
+  padding: 12px 15px;
+  margin: 10px 10px 5px 10px;
+  border: 3px solid var(--border-dark);
+  border-radius: 8px;
+  box-shadow: 4px 4px 0 var(--shadow-color);
+}
+
+.timer-search {
+  display: flex;
+  align-items: center;
+  background: var(--pastel-yellow);
+  padding: 8px 15px;
+  border: 3px solid var(--border-dark);
+  border-radius: 8px;
+  box-shadow: 3px 3px 0 var(--shadow-color);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.timer-search img {
+  width: 42px;
+  margin-right: 10px;
+}
+
+.timer-value {
+  font-size: 32px;
+  font-weight: bold;
+  color: var(--text-dark);
+  font-family: var(--font-pixel);
+  letter-spacing: 2px;
+}
+
+.score-value {
+  font-size: 20px;
+  font-weight: bold;
+  color: var(--text-dark);
+  font-family: var(--font-display);
+  background: var(--pastel-mint);
+  padding: 10px 18px;
+  border: 3px solid var(--border-dark);
+  border-radius: 8px;
+  box-shadow: 3px 3px 0 var(--shadow-color);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+/* ============================================
+   DIFFERENCES DISPLAY - Status Message
+   ============================================ */
+
+#differencesFoundDisplay {
+  background: var(--pastel-lavender);
+  color: var(--text-dark);
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: bold;
+  padding: 10px 15px;
+  margin: 8px 10px;
+  border: 3px solid var(--border-dark);
+  border-radius: 8px;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 4px 4px 0 var(--shadow-color);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+/* ============================================
+   PELLET TIMER WRAPPER - Progress Bar Area
+   ============================================ */
+
+/* Timer bar layout is now handled by layout.css
+   Theme only provides colors/backgrounds via .timer-bar selector */
+
+.hint-container {
+  display: flex;
+  justify-content: flex-end;
+  position: absolute;
+  right: 15px;
+  top: -45px;
+  gap: 8px;
+}
+
+/* ============================================
+   HINT ICONS - Cute Power-ups
+   ============================================ */
+
+.hint-icon {
+  width: 50px;
+  height: 50px;
+  background: var(--hot-pink);
+  border: 3px solid var(--border-dark);
+  border-radius: 10px 10px 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  box-shadow: 3px 3px 0 var(--shadow-color);
+  position: relative;
+  margin-right: 0;
+}
+
+.hint-icon::before {
+  content: '?';
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  width: 22px;
+  height: 22px;
+  background: var(--sunny-yellow);
+  color: var(--text-dark);
+  font-family: var(--font-display);
+  font-weight: bold;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 2px solid var(--border-dark);
+  box-shadow: 2px 2px 0 var(--shadow-color);
+}
+
+.hint-icon:hover {
+  transform: translateY(-4px) rotate(-5deg);
+  box-shadow: 5px 7px 0 var(--shadow-color);
+}
+
+.hint-icon:active {
+  transform: translateY(2px);
+  box-shadow: 1px 1px 0 var(--shadow-color);
+}
+
+.hint-icon img {
+  width: 55%;
+  height: auto;
+}
+
+.hint-bonus {
+  position: absolute;
+  top: -35px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: var(--text-dark);
+  background: var(--sunny-yellow);
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: bold;
+  padding: 5px 12px;
+  border: 2px solid var(--border-dark);
+  border-radius: 6px;
+  display: none;
+  pointer-events: none;
+  z-index: 100;
+  white-space: nowrap;
+  box-shadow: 2px 2px 0 var(--shadow-color);
+  animation: bonusBounce 0.4s ease-out;
+}
+
+@keyframes bonusBounce {
+  0% { transform: translateX(-50%) scale(0) translateY(10px); }
+  60% { transform: translateX(-50%) scale(1.15) translateY(-8px); }
+  100% { transform: translateX(-50%) scale(1) translateY(0); }
+}
+
+.hint-icon.used {
+  opacity: 0.5;
+  filter: grayscale(60%);
+  cursor: not-allowed;
+}
+
+.hint-icon.used::before {
+  content: '✓';
+  background: var(--lime-green);
+}
+
+/* ============================================
+   IMAGE CONTAINER - Game Area
+   ============================================ */
+
+.image-container {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+  min-height: 400px;
+  padding: 15px;
+  margin: 0 10px 10px 10px;
+  background: linear-gradient(180deg, #e8dfd0 0%, #d9cfc0 100%);
+}
+
+/* ============================================
+   IMAGE WRAPPERS - Memphis Design Style Frame
+   80s/90s geometric pattern - squiggles & shapes
+   ============================================ */
+
+.image-wrapper {
+  position: relative;
+  flex: 1 1 48%;
+  max-width: 48%;
+  overflow: hidden;
+  
+  /* Memphis pattern background */
+  background-color: #ffde59;
+  background-image: 
+    /* Triangles */
+    linear-gradient(135deg, #ff6b9d 25%, transparent 25%),
+    linear-gradient(225deg, #ff6b9d 25%, transparent 25%),
+    /* Dots */
+    radial-gradient(circle, #00c9a7 8px, transparent 8px),
+    radial-gradient(circle, #4ecdc4 6px, transparent 6px),
+    radial-gradient(circle, #ff6b9d 5px, transparent 5px),
+    /* Squiggly lines effect via repeating pattern */
+    repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 10px,
+      #c44dff 10px,
+      #c44dff 12px,
+      transparent 12px,
+      transparent 22px
+    );
+  background-size: 
+    40px 40px,
+    40px 40px,
+    60px 60px,
+    80px 80px,
+    45px 45px,
+    100% 100%;
+  background-position:
+    0 0,
+    20px 20px,
+    10px 30px,
+    50px 10px,
+    25px 55px,
+    0 0;
+  
+  padding: 10px;
+  border-radius: 8px;
+  border: 3px solid #222;
+  box-shadow: none;
+}
+
+/* Game images - clean, no effects */
+.image-wrapper img {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  cursor: crosshair;
+  display: block;
+  background: #fff;
+  border-radius: 4px;
+  border: 2px solid #222;
+}
+
+canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+/* ============================================
+   POPUP - 90s Windows Dialog Style
+   ============================================ */
+
+.popup {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(80, 60, 100, 0.7);
+  z-index: 10000;
+}
+
+.popup-content {
+  background: linear-gradient(180deg, #e8e0f0 0%, #d8d0e8 100%);
+  text-align: center;
+  padding: 0;
+  min-width: 340px;
+  max-width: 440px;
+  border: 3px solid #2a2a3a;
+  border-radius: 0;
+  box-shadow: 
+    inset 1px 1px 0 #fff,
+    inset -1px -1px 0 #888,
+    4px 4px 0 rgba(0, 0, 0, 0.3);
+  animation: popupBounce 0.4s ease-out;
+  overflow: hidden;
+  position: relative;
+}
+
+@keyframes popupBounce {
+  0% { transform: scale(0.8) translateY(-30px); opacity: 0; }
+  60% { transform: scale(1.05) translateY(5px); }
+  100% { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+.popup-content h2 {
+  margin: 0;
+  padding: 30px 30px 25px;
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: bold;
+  color: #2a2a3a;
+  text-transform: uppercase;
+  white-space: pre-line;
+  line-height: 1.4;
+  background: linear-gradient(180deg, var(--hot-pink) 0%, #cc3366 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Input field style container */
+.popup-input-container {
+  background: #fff;
+  border: 2px solid #2a2a3a;
+  border-radius: 0;
+  margin: 0 25px 15px;
+  padding: 2px;
+  box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.popup-input-container input {
+  width: 100%;
+  border: none;
+  padding: 10px 15px;
+  font-family: var(--font-system);
+  font-size: 14px;
+  color: #888;
+  background: transparent;
+  outline: none;
+}
+
+/* Score/info display */
+.popup-score {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin: 10px 25px 20px;
+}
+
+.popup-score-dot {
+  width: 12px;
+  height: 12px;
+  background: var(--hot-pink);
+  border-radius: 50%;
+  border: 2px solid #2a2a3a;
+}
+
+.popup-content button {
+  padding: 10px 40px;
+  background: linear-gradient(180deg, #f8f0ff 0%, #e8e0f0 50%, #d8d0e0 100%);
+  color: #2a2a3a;
+  border: 2px solid #2a2a3a;
+  border-radius: 0;
+  cursor: pointer;
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: bold;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 0 auto 25px auto;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.15s ease;
+  box-shadow: 
+    inset 1px 1px 0 #fff,
+    inset -1px -1px 0 #aaa,
+    2px 2px 0 rgba(0, 0, 0, 0.2);
+}
+
+.popup-content button:hover {
+  background: linear-gradient(180deg, #ffe0f0 0%, #ffb0d0 50%, #ff90c0 100%);
+  transform: translateY(-1px);
+  box-shadow: 
+    inset 1px 1px 0 #fff,
+    inset -1px -1px 0 #cc6699,
+    3px 3px 0 rgba(0, 0, 0, 0.25);
+}
+
+.popup-content button:active {
+  transform: translateY(1px);
+  box-shadow: 
+    inset -1px -1px 0 #fff,
+    inset 1px 1px 0 #aaa;
+}
+
+/* Popup closing animation */
+.popup.popup-closing {
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.popup.popup-closing .popup-content {
+  transform: scale(0.9);
+  transition: transform 0.2s ease;
+}
+
+/* Timed popup (no button) - larger, more dramatic */
+.popup-content.popup-timed {
+  min-width: 400px;
+  max-width: 500px;
+}
+
+.popup-content.popup-timed h2 {
+  font-size: 42px;
+  padding: 40px 40px 45px;
+  letter-spacing: 2px;
+}
+
+/* ============================================
+   UTILITY CLASSES
+   ============================================ */
+
+.hidden {
+  display: none;
+}
+
+#message {
+  font-size: 18px;
+  font-weight: bold;
+  color: var(--timer-green);
+  font-family: var(--font-display);
+}
+
+/* ============================================
+   CUSTOM SCROLLBAR (Cute Style)
+   ============================================ */
+
+::-webkit-scrollbar {
+  width: 16px;
+  height: 16px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--window-bg);
+  border: 2px solid var(--border-dark);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--pastel-pink) 0%, var(--hot-pink) 100%);
+  border: 2px solid var(--border-dark);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--hot-pink);
+}
+
+/* ============================================
+   FUN HOVER EFFECTS
+   ============================================ */
+
+.score-value:hover,
+.timer-search:hover {
+  transform: translateY(-2px) rotate(-1deg);
+  box-shadow: 5px 5px 0 var(--shadow-color);
+}
+
+#differencesFoundDisplay:hover {
+  transform: scale(1.02);
+  box-shadow: 5px 5px 0 var(--shadow-color);
+}
+
+/* ============================================
+   RESPONSIVE ADJUSTMENTS
+   ============================================ */
+
+@media (max-width: 768px) {
+  .container {
+    padding: 10px;
+  }
+  
+  .game {
+    height: auto;
+    max-height: none;
+  }
+  
+  .image-wrapper {
+    flex: 1 1 100%;
+    max-width: 100%;
+    margin-bottom: 10px;
+  }
+  
+  .timer-container {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .pellet-timer {
+    padding-left: 30px;
+  }
+  
+  .clock-icon {
+    width: 55px;
+    height: 55px;
+  }
+  
+  .clock-icon img {
+    width: 32px;
+  }
+  
+  .pellet {
+    width: 8px;
+    height: 22px;
+  }
+  
+  .hint-icon {
+    width: 42px;
+    height: 42px;
+  }
+  
+  .hint-container {
+    top: -38px;
+  }
+}
+
+@media (max-width: 480px) {
+  .score-value,
+  .timer-value {
+    font-size: 18px;
+  }
+  
+  .popup-content {
+    min-width: 280px;
+    margin: 10px;
+  }
+  
+  .popup-content h2 {
+    font-size: 18px;
+  }
+  
+  .game::before {
+    font-size: 13px;
+    padding: 8px 12px;
+  }
+}
+
+/* ============================================
+   INTRO SCREEN - Arcade Title Screen
+   90s Megatouch inspired with high scores
+   Optimized for 4:3 displays
+   ============================================ */
+
+.intro-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #4ecdc4;
+  background-image:
+    /* Stars/sparkles */
+    radial-gradient(circle, #ff69b4 3px, transparent 3px),
+    radial-gradient(circle, #ffe135 2px, transparent 2px),
+    radial-gradient(circle, #ff9ec4 2px, transparent 2px);
+  background-size: 
+    120px 100px,
+    80px 60px,
+    60px 80px;
+  background-position:
+    10px 20px,
+    40px 50px,
+    70px 30px;
+  z-index: 9999;
+  animation: introFadeIn 0.5s ease-out;
+}
+
+@keyframes introFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.intro-screen.intro-exit {
+  animation: introFadeOut 0.4s ease-in forwards;
+}
+
+@keyframes introFadeOut {
+  from { opacity: 1; transform: scale(1); }
+  to { opacity: 0; transform: scale(1.05); }
+}
+
+.intro-screen.hidden {
+  display: none;
+}
+
+.intro-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  width: 95%;
+  max-width: 900px;
+  height: 95%;
+  max-height: 700px;
+  padding: 20px;
+  background: linear-gradient(180deg, var(--window-cream) 0%, #e8dfd0 100%);
+  border: 5px solid var(--border-dark);
+  border-radius: 16px;
+  box-shadow: 
+    12px 12px 0 var(--shadow-color),
+    inset 0 0 0 4px var(--pastel-cream),
+    inset 0 0 60px rgba(255, 182, 193, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Decorative corner shapes */
+.intro-container::before,
+.intro-container::after {
+  content: '';
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg, var(--hot-pink) 50%, transparent 50%);
+  opacity: 0.6;
+}
+
+.intro-container::before {
+  top: -2px;
+  left: -2px;
+  border-radius: 12px 0 0 0;
+}
+
+.intro-container::after {
+  bottom: -2px;
+  right: -2px;
+  background: linear-gradient(-45deg, var(--pastel-mint) 50%, transparent 50%);
+  border-radius: 0 0 12px 0;
+}
+
+/* ============================================
+   INTRO HEADER - Title Section
+   ============================================ */
+
+.intro-header {
+  text-align: center;
+  padding: 10px 0 5px;
+  position: relative;
+  z-index: 1;
+}
+
+.intro-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 64px;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  position: relative;
+}
+
+.title-photo {
+  color: var(--hot-pink);
+  text-shadow: 
+    4px 4px 0 var(--border-dark),
+    -2px -2px 0 #fff,
+    6px 6px 0 rgba(0, 0, 0, 0.2);
+}
+
+.title-hunt {
+  color: var(--sunny-yellow);
+  text-shadow: 
+    4px 4px 0 var(--border-dark),
+    -2px -2px 0 #fff,
+    6px 6px 0 rgba(0, 0, 0, 0.2);
+}
+
+@keyframes titleBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+.intro-subtitle {
+  position: absolute;
+  right: -200px;
+  top: 50%;
+  transform: translateY(-50%) rotate(12deg);
+  font-family: var(--font-display);
+  font-size: 16px;
+  color: var(--text-dark);
+  padding: 6px 14px;
+  background: var(--pastel-yellow);
+  border: 2px solid var(--border-dark);
+  border-radius: 4px;
+  letter-spacing: 1px;
+  box-shadow: 2px 2px 0 var(--shadow-color);
+  white-space: nowrap;
+}
+
+/* ============================================
+   INTRO CONTENT - Preview & Scores Layout
+   ============================================ */
+
+.intro-content {
+  display: flex;
+  gap: 25px;
+  width: 100%;
+  flex: 1;
+  min-height: 0;
+  padding: 10px 0;
+  position: relative;
+  z-index: 1;
+}
+
+/* Left Side: Game Preview */
+.intro-preview {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 25px;
+}
+
+.preview-frame {
+  width: 100%;
+  max-width: 320px;
+  background: linear-gradient(180deg, #e8dfd0 0%, #d9cfc0 100%);
+  border: 4px solid var(--border-dark);
+  border-radius: 12px;
+  padding: 12px;
+  box-shadow: 
+    6px 6px 0 var(--shadow-color),
+    inset 0 0 0 3px rgba(255, 255, 255, 0.5);
+  position: relative;
+}
+
+.preview-images {
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 3px solid var(--border-dark);
+  background: #fff;
+}
+
+.preview-img {
+  width: 100%;
+  display: block;
+  aspect-ratio: 4/3;
+  object-fit: cover;
+}
+
+.preview-badge {
+  position: absolute;
+  bottom: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(180deg, var(--hot-pink) 0%, #cc3366 100%);
+  color: var(--text-white);
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: bold;
+  padding: 6px 18px;
+  border: 3px solid var(--border-dark);
+  border-radius: 20px;
+  white-space: nowrap;
+  box-shadow: 3px 3px 0 var(--shadow-color);
+  letter-spacing: 1px;
+}
+
+/* Start Button */
+.start-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 18px 50px;
+  margin-top: 15px;
+  background: linear-gradient(180deg, #4ecdc4 0%, #26a69a 50%, #1e8c82 100%);
+  color: var(--text-white);
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  border: 4px solid var(--border-dark);
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  box-shadow: 
+    6px 6px 0 var(--shadow-color),
+    inset 0 3px 0 rgba(255, 255, 255, 0.3),
+    inset 0 -3px 0 rgba(0, 0, 0, 0.2);
+  position: relative;
+  overflow: hidden;
+  animation: startPulse 2s ease-in-out infinite;
+}
+
+@keyframes startPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+}
+
+.start-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  animation: startShine 3s ease-in-out infinite;
+}
+
+@keyframes startShine {
+  0% { left: -100%; }
+  50%, 100% { left: 100%; }
+}
+
+.start-btn:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 
+    8px 10px 0 var(--shadow-color),
+    inset 0 3px 0 rgba(255, 255, 255, 0.4),
+    inset 0 -3px 0 rgba(0, 0, 0, 0.2);
+}
+
+.start-btn:active {
+  transform: translateY(2px);
+  box-shadow: 
+    2px 2px 0 var(--shadow-color),
+    inset 0 -3px 0 rgba(255, 255, 255, 0.2),
+    inset 0 3px 0 rgba(0, 0, 0, 0.2);
+}
+
+.start-icon {
+  font-size: 24px;
+  filter: drop-shadow(2px 2px 0 rgba(0, 0, 0, 0.3));
+}
+
+/* Right Side: High Scores */
+.intro-scores {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 280px;
+}
+
+.scores-panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(180deg, #2d2d2d 0%, #1a1a1a 100%);
+  border: 4px solid var(--border-dark);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 
+    6px 6px 0 var(--shadow-color);
+}
+
+.scores-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 5px;
+  background: linear-gradient(90deg, var(--title-bar) 0%, var(--title-bar-pink) 100%);
+  border-bottom: 3px solid var(--border-dark);
+}
+
+.scores-title {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: bold;
+  color: var(--text-dark);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.trophy-svg {
+  color: var(--text-dark);
+  filter: drop-shadow(1px 1px 0 rgba(0, 0, 0, 0.3));
+}
+
+.trophy-icon {
+  display: none;
+}
+
+@keyframes trophyWiggle {
+  0%, 100% { transform: rotate(-5deg); }
+  50% { transform: rotate(5deg); }
+}
+
+.scores-list {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 2px 10px;
+  gap: 0;
+  overflow: hidden;
+  justify-content: space-around;
+}
+
+.score-row {
+  display: flex;
+  align-items: center;
+  padding: 0 8px;
+  min-height: 0;
+  background: transparent;
+  border-radius: 0;
+  font-family: var(--font-display);
+  font-size: clamp(16px, 2.5vh, 22px);
+  font-weight: bold;
+  color: #fff;
+  transition: background 0.2s;
+}
+
+.score-row:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.score-row.rank-gold {
+  background: transparent;
+  color: #ffcc00;
+}
+
+.score-row.rank-silver {
+  background: transparent;
+  color: #ddd;
+}
+
+.score-row.rank-bronze {
+  background: transparent;
+  color: #e8a050;
+}
+
+.score-rank {
+  width: 32px;
+  font-weight: bold;
+  text-align: right;
+  margin-right: 6px;
+  font-size: inherit;
+  opacity: 0.8;
+}
+
+.score-name {
+  flex: 1;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: inherit;
+}
+
+.score-dots {
+  display: none;
+}
+
+.score-points {
+  font-weight: bold;
+  text-align: right;
+  min-width: 60px;
+  font-size: inherit;
+  color: var(--pastel-mint);
+}
+
+/* ============================================
+   INTRO FOOTER - Prompts & Decoration
+   ============================================ */
+
+.intro-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 10px 0 5px;
+  position: relative;
+  z-index: 1;
+}
+
+.footer-decoration {
+  font-size: 14px;
+  color: var(--hot-pink);
+  opacity: 0.7;
+  letter-spacing: 4px;
+}
+
+.touch-prompt {
+  font-family: var(--font-display);
+  font-size: 16px;
+  color: var(--text-dark);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  padding: 8px 20px;
+  background: var(--pastel-yellow);
+  border: 2px solid var(--border-dark);
+  border-radius: 20px;
+  animation: promptPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes promptPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(0.98); }
+}
+
+/* ============================================
+   INTRO SCREEN - Responsive (4:3 Optimized)
+   ============================================ */
+
+/* Landscape orientation (typical 4:3) */
+@media (min-aspect-ratio: 1/1) {
+  .intro-content {
+    flex-direction: row;
+  }
+  
+  .intro-preview,
+  .intro-scores {
+    flex: 1;
+  }
+}
+
+/* Portrait / narrow screens */
+@media (max-aspect-ratio: 1/1) {
+  .intro-content {
+    flex-direction: column;
+    overflow-y: auto;
+  }
+  
+  .intro-preview {
+    order: 1;
+  }
+  
+  .intro-scores {
+    order: 2;
+    min-height: 200px;
+  }
+  
+  .preview-frame {
+    max-width: 280px;
+  }
+}
+
+@media (max-width: 768px) {
+  .intro-container {
+    padding: 15px;
+  }
+  
+  .intro-title {
+    font-size: 48px;
+  }
+  
+  .intro-subtitle {
+    font-size: 13px;
+    right: -140px;
+    padding: 4px 10px;
+  }
+  
+  .intro-content {
+    gap: 15px;
+  }
+  
+  .start-btn {
+    padding: 14px 35px;
+    font-size: 22px;
+  }
+  
+  .scores-title {
+    font-size: 18px;
+  }
+  
+  .score-row {
+    font-size: clamp(14px, 2.2vh, 18px);
+  }
+  
+  .score-points {
+    min-width: 50px;
+  }
+}
+
+@media (max-width: 480px) {
+  .intro-container {
+    padding: 10px;
+    height: 98%;
+    width: 98%;
+  }
+  
+  .intro-title {
+    font-size: 36px;
+  }
+  
+  .intro-subtitle {
+    font-size: 11px;
+    right: -100px;
+    top: 50%;
+    transform: translateY(-50%) rotate(12deg);
+    padding: 3px 8px;
+  }
+  
+  .intro-content {
+    flex-direction: column;
+  }
+  
+  .preview-frame {
+    max-width: 220px;
+    padding: 8px;
+  }
+  
+  .preview-badge {
+    font-size: 11px;
+    padding: 4px 12px;
+  }
+  
+  .start-btn {
+    padding: 12px 30px;
+    font-size: 18px;
+  }
+  
+  .scores-panel {
+    max-height: 180px;
+  }
+  
+  .touch-prompt {
+    font-size: 12px;
+    padding: 6px 15px;
+  }
+  
+  .footer-decoration {
+    display: none;
+  }
+}

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Photo Hunt - Spot the Difference</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Fredoka:wght@400;600;700&family=Patrick+Hand&display=swap" rel="stylesheet">
+  <!-- Base reset & utilities -->
+  <link rel="stylesheet" href="style/style.css">
+  <!-- Layout structure -->
+  <link rel="stylesheet" href="style/layout.css">
+  <!-- Virtual Keyboard -->
+  <link rel="stylesheet" href="style/keyboard.css">
+  <!-- Active Theme - colors & visual styling -->
+  <link rel="stylesheet" href="style/themes/retro-vaporwave.css">
+  <!-- Font overrides (must be after theme) -->
+  <style>
+    body.font-fredoka {
+      --font-display: 'Fredoka', Helvetica, Arial, sans-serif;
+      --font-system: 'Fredoka', Helvetica, Arial, sans-serif;
+      --font-pixel: 'Fredoka', Helvetica, Arial, sans-serif;
+      font-family: 'Fredoka', Helvetica, Arial, sans-serif;
+    }
+    body.font-bangers {
+      --font-display: 'Bangers', cursive;
+      --font-system: 'Bangers', cursive;
+      --font-pixel: 'Bangers', cursive;
+      font-family: 'Bangers', cursive;
+      letter-spacing: 1px;
+    }
+    body.font-patrick-hand {
+      --font-display: 'Patrick Hand', cursive;
+      --font-system: 'Patrick Hand', cursive;
+      --font-pixel: 'Patrick Hand', cursive;
+      font-family: 'Patrick Hand', cursive;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ============================================
+       INTRO SCREEN - Title, High Scores, Start
+       ============================================ -->
+  <div class="intro-screen" id="introScreen">
+    <div class="intro-container">
+      
+      <!-- Main Title -->
+      <div class="intro-header">
+        <h1 class="intro-title">
+          <span class="title-photo">PHOTO</span>
+          <span class="title-hunt">HUNT</span>
+        </h1>
+        <div class="intro-subtitle">Spot The Difference!</div>
+      </div>
+
+      <!-- Main Content Area -->
+      <div class="intro-content">
+        
+        <!-- Left Side: Game Preview -->
+        <div class="intro-preview">
+          <div class="preview-frame">
+            <div class="preview-images">
+              <img src="images/set1/image1.jpg" alt="Game Preview" class="preview-img">
+            </div>
+            <div class="preview-badge">FIND 5 DIFFERENCES!</div>
+          </div>
+          
+          <!-- Start Button -->
+          <button class="start-btn" id="startGameBtn">
+            <span class="start-icon">▶</span>
+            <span class="start-text">START GAME</span>
+          </button>
+        </div>
+
+        <!-- Right Side: High Scores -->
+        <div class="intro-scores">
+          <div class="scores-panel">
+            <div class="scores-header">
+              <span class="scores-title">HIGH SCORES</span>
+            </div>
+            <div class="scores-list" id="highScoresList">
+              <!-- Scores populated by JS -->
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Footer -->
+      <div class="intro-footer">
+        <div class="footer-decoration">✦ ✧ ✦ ✧ ✦</div>
+        <div class="touch-prompt">TOUCH SCREEN TO START</div>
+        <div class="footer-decoration">✦ ✧ ✦ ✧ ✦</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ============================================
+       GAME SCREEN
+       ============================================ -->
+  <div class="container hidden" id="gameScreen">
+    <div class="game" id="game">
+      
+      <!-- Round Counter (top right) -->
+      <div class="round-display" id="roundDisplay">
+        <span class="label">ROUND</span>
+        <span class="value" id="roundNumber">1</span>
+      </div>
+      
+      <!-- Title Bar: Game Title with High Score -->
+      <div class="title-bar shadow-lg border-dark-thick rounded-lg">
+        <span class="title-bar-text">PHOTO HUNT</span>
+        <div class="high-score-display">
+          <span class="label">HIGH</span>
+          <span class="value"><span id="highScoreName">---</span> <span id="highScoreValue">0</span></span>
+        </div>
+      </div>
+      
+      <!-- Header Bar: Total Score | Differences | Hints -->
+      <div class="header-bar shadow-lg border-dark-thick rounded-lg">
+        <div class="total-score shadow-sm border-dark rounded">
+          <span class="label">SCORE</span>
+          <span class="value" id="scoreValue">0</span>
+        </div>
+        
+        <div class="differences-found shadow-sm border-dark rounded" id="differencesFoundDisplay">
+          <span class="label">FOUND</span>
+          <span class="value"><span id="differencesCount">0</span> / <span id="differencesTotal">5</span></span>
+        </div>
+        
+        <div class="hints-container" id="hintContainer">
+          <span class="label">HINTS</span>
+          <button class="hint-btn shadow-sm border-dark rounded-full" id="hint1" title="Use Hint (3 remaining)">
+            <svg viewBox="0 0 24 24">
+              <path d="M7 7 C7 4, 10 2, 13 3.5 C16 5, 16 9, 12 12 L12 15" 
+                    stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round"/>
+              <circle cx="12" cy="20" r="2" fill="currentColor"/>
+            </svg>
+          </button>
+          <button class="hint-btn shadow-sm border-dark rounded-full" id="hint2" title="Use Hint">
+            <svg viewBox="0 0 24 24">
+              <path d="M7 7 C7 4, 10 2, 13 3.5 C16 5, 16 9, 12 12 L12 15" 
+                    stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round"/>
+              <circle cx="12" cy="20" r="2" fill="currentColor"/>
+            </svg>
+          </button>
+          <button class="hint-btn shadow-sm border-dark rounded-full" id="hint3" title="Use Hint">
+            <svg viewBox="0 0 24 24">
+              <path d="M7 7 C7 4, 10 2, 13 3.5 C16 5, 16 9, 12 12 L12 15" 
+                    stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round"/>
+              <circle cx="12" cy="20" r="2" fill="currentColor"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Timer Bar: Clock + Pellets + Round Score -->
+      <div class="timer-bar shadow-lg border-dark-thick rounded-lg" id="pelletTimerWrapper">
+        <div class="clock-icon">
+          <img src="images/ui/clock.svg" width="50" alt="Time">
+        </div>
+        
+        <div class="pellet-container">
+          <div class="pellet-timer" id="pelletTimer">
+            <!-- Pellets generated by JS -->
+          </div>
+        </div>
+        
+        <div class="round-score shadow-sm border-dark rounded">
+          <span class="value" id="timerValue">999</span>
+          <span class="label">PTS</span>
+        </div>
+      </div>
+
+      <!-- Game Images -->
+      <div class="image-container shadow-lg border-dark-thick rounded-lg">
+        <div class="image-wrapper">
+          <img id="image1" src="" alt="Image 1">
+        </div>
+        <div class="image-wrapper">
+          <img id="image2" src="" alt="Image 2">
+        </div>
+      </div>
+     
+    </div>
+  </div>
+
+  <script src="js/game-settings.js"></script>
+  <script src="js/high-scores.js"></script>
+  <script src="js/keyboard.js"></script>
+  <script src="js/popup.js"></script>
+  <script src="js/intro-screen.js"></script>
+  <script src="js/script.js"></script>
+</body>
+
+</html>

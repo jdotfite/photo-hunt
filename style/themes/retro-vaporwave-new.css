@@ -1,0 +1,455 @@
+/* ===========================================
+   RETRO VAPORWAVE THEME - Fun 90s OS Style
+   Playful pastels with chunky retro shadows
+   Inspired by Y2K aesthetics & cute computer UI
+   =========================================== */
+
+:root {
+  /* Pastel Palette - Fun & Playful */
+  --pastel-pink: #ffb6c1;
+  --pastel-yellow: #fff59d;
+  --pastel-mint: #b2f5ea;
+  --pastel-lavender: #e6d5ff;
+  --pastel-peach: #ffd4a3;
+  --pastel-cream: #fff8dc;
+  --pastel-sky: #a8e6ff;
+  
+  /* Bold Accent Colors */
+  --hot-pink: #ff69b4;
+  --sunny-yellow: #ffe135;
+  --lime-green: #98fb98;
+  --coral: #ff7f7f;
+  --purple: #9b59b6;
+  
+  /* UI Colors - Retro Window Style */
+  --window-bg: #f5e6d3;
+  --window-cream: #faf3e0;
+  --title-bar: #ffcc66;
+  --title-bar-pink: #ffb3d9;
+  --border-dark: #2d2d2d;
+  --border-medium: #4a4a4a;
+  --shadow-color: #2d2d2d;
+  
+  /* Text */
+  --text-dark: #2d2d2d;
+  --text-white: #ffffff;
+  
+  /* Timer Colors */
+  --timer-red: #ff6b6b;
+  --timer-yellow: #ffd93d;
+  --timer-green: #6bcb77;
+  
+  /* Typography */
+  --font-display: 'Comic Sans MS', 'Chalkboard', cursive, sans-serif;
+  --font-system: 'Segoe UI', Tahoma, sans-serif;
+  --font-pixel: 'Courier New', monospace;
+}
+
+/* ============================================
+   BASE STYLES - Cute Pastel Background
+   ============================================ */
+
+html,
+body {
+  background: linear-gradient(135deg, 
+    #fce4ec 0%, 
+    #e8f5e9 25%, 
+    #fff3e0 50%, 
+    #e3f2fd 75%, 
+    #f3e5f5 100%
+  );
+  background-attachment: fixed;
+  font-family: var(--font-system);
+}
+
+/* ============================================
+   GAME WINDOW - Fun Retro Frame
+   ============================================ */
+
+.game {
+  background: var(--window-cream);
+  border-radius: 12px;
+  padding: 0;
+  max-height: 95vh;
+  
+  /* Chunky retro border & shadow */
+  border: 4px solid var(--border-dark);
+  box-shadow: 
+    8px 8px 0 var(--shadow-color),
+    inset 0 0 0 3px var(--pastel-cream);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Window Title Bar */
+.game::before {
+  content: 'PHOTO HUNT - Spot The Difference!';
+  display: flex;
+  align-items: center;
+  background: linear-gradient(90deg, var(--title-bar) 0%, var(--title-bar-pink) 100%);
+  color: var(--text-dark);
+  font-family: var(--font-display);
+  font-weight: bold;
+  font-size: 16px;
+  padding: 10px 15px;
+  border-bottom: 3px solid var(--border-dark);
+  letter-spacing: 0.5px;
+}
+
+/* Window buttons decoration */
+.game::after {
+  content: '● ● ●';
+  position: absolute;
+  top: 8px;
+  right: 15px;
+  font-size: 14px;
+  letter-spacing: 4px;
+  color: var(--border-dark);
+}
+
+/* ============================================
+   HEADER BAR - Score, Differences, Hints
+   ============================================ */
+
+.header-bar {
+  background: var(--window-bg);
+  padding: 12px 15px;
+  margin: 10px;
+  border: 3px solid var(--border-dark);
+  border-radius: 8px;
+  box-shadow: 4px 4px 0 var(--shadow-color);
+}
+
+/* Score, Differences, Hints shared label style */
+.header-bar .label {
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-dark);
+  opacity: 0.7;
+}
+
+.header-bar .value {
+  font-family: var(--font-pixel);
+  font-size: 22px;
+  font-weight: bold;
+  color: var(--text-dark);
+}
+
+/* Total Score */
+.total-score {
+  background: var(--pastel-mint);
+  padding: 8px 16px;
+  border: 3px solid var(--border-dark);
+  border-radius: 8px;
+  box-shadow: 3px 3px 0 var(--shadow-color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Differences Found */
+.differences-found {
+  background: var(--pastel-lavender);
+  padding: 8px 16px;
+  border: 3px solid var(--border-dark);
+  border-radius: 8px;
+  box-shadow: 3px 3px 0 var(--shadow-color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Hints Container */
+.hints-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hints-container .label {
+  margin-right: 4px;
+}
+
+/* ============================================
+   HINT BUTTONS - Cute Question Marks
+   ============================================ */
+
+.hint-btn {
+  width: 40px;
+  height: 40px;
+  background: var(--hot-pink);
+  border: 3px solid var(--border-dark);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  box-shadow: 3px 3px 0 var(--shadow-color);
+  color: var(--text-white);
+}
+
+.hint-btn svg {
+  width: 28px;
+  height: 28px;
+}
+
+.hint-btn:hover {
+  transform: translateY(-3px) rotate(-5deg);
+  box-shadow: 5px 6px 0 var(--shadow-color);
+  background: var(--coral);
+}
+
+.hint-btn:active {
+  transform: translateY(2px);
+  box-shadow: 1px 1px 0 var(--shadow-color);
+}
+
+.hint-btn.used {
+  background: #ccc;
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.hint-btn.used:hover {
+  transform: none;
+  box-shadow: 3px 3px 0 var(--shadow-color);
+}
+
+/* ============================================
+   TIMER BAR - Clock + Pellets + Round Score
+   ============================================ */
+
+.timer-bar {
+  background: var(--window-bg);
+  margin: 0 10px 10px 10px;
+  padding: 10px 15px;
+  border: 3px solid var(--border-dark);
+  border-radius: 8px;
+  box-shadow: 4px 4px 0 var(--shadow-color);
+}
+
+/* Clock Icon */
+.clock-icon {
+  width: 55px;
+  height: 55px;
+  background: linear-gradient(135deg, var(--pastel-sky) 0%, var(--pastel-mint) 100%);
+  border: 3px solid var(--border-dark);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 3px 3px 0 var(--shadow-color);
+  flex-shrink: 0;
+}
+
+.clock-icon img {
+  width: 32px;
+  height: 32px;
+}
+
+/* Pellet Container */
+.pellet-container {
+  background: rgba(0,0,0,0.1);
+  border-radius: 6px;
+  padding: 6px 10px;
+}
+
+/* Pellets */
+.pellet {
+  width: 10px;
+  height: 26px;
+  background: #ddd;
+  margin: 0 1px;
+  border-radius: 3px;
+  border: 2px solid var(--border-dark);
+  transition: opacity 0.3s, transform 0.2s;
+}
+
+.pellet.red {
+  background: linear-gradient(180deg, #ff9999 0%, var(--timer-red) 100%);
+}
+
+.pellet.yellow {
+  background: linear-gradient(180deg, #ffeb99 0%, var(--timer-yellow) 100%);
+}
+
+.pellet.green {
+  background: linear-gradient(180deg, #a8e6cf 0%, var(--timer-green) 100%);
+}
+
+/* Round Score */
+.round-score {
+  background: var(--pastel-yellow);
+  padding: 8px 14px;
+  border: 3px solid var(--border-dark);
+  border-radius: 8px;
+  box-shadow: 3px 3px 0 var(--shadow-color);
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.round-score .value {
+  font-family: var(--font-pixel);
+  font-size: 26px;
+  font-weight: bold;
+  color: var(--text-dark);
+}
+
+.round-score .label {
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: bold;
+  color: var(--text-dark);
+  opacity: 0.7;
+}
+
+/* ============================================
+   IMAGE CONTAINER - Game Area
+   ============================================ */
+
+.image-container {
+  background: linear-gradient(180deg, #e8dfd0 0%, #d9cfc0 100%);
+  border: 3px solid var(--border-dark);
+  border-radius: 10px;
+  margin: 0 10px 10px 10px;
+  padding: 12px;
+  box-shadow: inset 3px 3px 0 rgba(0,0,0,0.1);
+}
+
+/* ============================================
+   IMAGE WRAPPERS - Picture Frames
+   ============================================ */
+
+.image-wrapper {
+  background: var(--window-cream);
+  padding: 8px;
+  border: 4px solid var(--border-dark);
+  border-radius: 8px;
+  box-shadow: 5px 5px 0 var(--shadow-color);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.image-wrapper:hover {
+  transform: translateY(-3px) rotate(0.5deg);
+  box-shadow: 7px 9px 0 var(--shadow-color);
+}
+
+.image-wrapper img {
+  border-radius: 4px;
+  cursor: crosshair;
+  border: 2px solid var(--border-dark);
+}
+
+/* ============================================
+   POPUP - Dialog Box (Cute Retro Style)
+   ============================================ */
+
+.popup {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.popup-content {
+  background: var(--window-cream);
+  border-radius: 12px;
+  padding: 0;
+  min-width: 320px;
+  max-width: 420px;
+  border: 4px solid var(--border-dark);
+  box-shadow: 10px 10px 0 var(--shadow-color);
+  animation: popupBounce 0.4s ease-out;
+  overflow: hidden;
+}
+
+@keyframes popupBounce {
+  0% { transform: scale(0.8) translateY(-30px); opacity: 0; }
+  60% { transform: scale(1.05) translateY(5px); }
+  100% { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+.popup-content::before {
+  content: '📢 MESSAGE';
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(90deg, var(--title-bar) 0%, var(--title-bar-pink) 100%);
+  color: var(--text-dark);
+  font-family: var(--font-display);
+  font-weight: bold;
+  font-size: 14px;
+  padding: 10px;
+  border-bottom: 3px solid var(--border-dark);
+}
+
+.popup-content h2 {
+  font-family: var(--font-display);
+  font-size: 24px;
+  color: var(--text-dark);
+  margin: 20px 20px 10px 20px;
+}
+
+.popup-content p {
+  font-family: var(--font-system);
+  color: var(--text-dark);
+  margin: 10px 20px;
+}
+
+.popup-content button {
+  background: var(--hot-pink);
+  color: var(--text-white);
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: bold;
+  padding: 12px 30px;
+  margin: 20px;
+  border: 3px solid var(--border-dark);
+  border-radius: 8px;
+  box-shadow: 4px 4px 0 var(--shadow-color);
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.popup-content button:hover {
+  transform: translateY(-2px);
+  box-shadow: 6px 6px 0 var(--shadow-color);
+  background: var(--coral);
+}
+
+.popup-content button:active {
+  transform: translateY(2px);
+  box-shadow: 2px 2px 0 var(--shadow-color);
+}
+
+/* ============================================
+   4:3 MODE ADJUSTMENTS
+   ============================================ */
+
+body.display-4-3 .game {
+  border-radius: 0;
+  box-shadow: none;
+  border-width: 2px;
+}
+
+body.display-4-3 .game::before {
+  padding: 6px 10px;
+  font-size: 14px;
+}
+
+body.display-4-3 .header-bar {
+  margin: 5px;
+  padding: 8px 10px;
+}
+
+body.display-4-3 .timer-bar {
+  margin: 0 5px 5px 5px;
+  padding: 6px 10px;
+}
+
+body.display-4-3 .image-container {
+  margin: 0 5px 5px 5px;
+  padding: 8px;
+}
