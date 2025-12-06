@@ -1,0 +1,314 @@
+/* ===========================================
+   TUTORIAL OVERLAY STYLES
+   Interactive step-by-step game tutorial
+   Matches Retro Vaporwave pastel 90s theme
+   =========================================== */
+
+/* ============================================
+   OVERLAY CONTAINER
+   ============================================ */
+.tutorial-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10000;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.tutorial-overlay.active {
+    pointer-events: auto;
+    opacity: 1;
+}
+
+/* ============================================
+   DARKENED BACKDROP - Soft pastel tint
+   ============================================ */
+.tutorial-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(45, 45, 45, 0.85);
+}
+
+/* ============================================
+   SPOTLIGHT - Highlights elements
+   ============================================ */
+.tutorial-spotlight {
+    position: absolute;
+    border-radius: 8px;
+    box-shadow: 0 0 0 9999px rgba(45, 45, 45, 0.85);
+    background: transparent;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 0;
+    pointer-events: none;
+}
+
+.tutorial-spotlight.visible {
+    opacity: 1;
+}
+
+/* ============================================
+   PULSE RING - Animated attention ring
+   ============================================ */
+.tutorial-pulse-ring {
+    position: absolute;
+    border-radius: 8px;
+    border: 4px solid #ff69b4;
+    opacity: 0;
+    pointer-events: none;
+    animation: tutorial-pulse 2s ease-in-out infinite;
+    box-shadow: 4px 4px 0 #2d2d2d;
+}
+
+.tutorial-pulse-ring.visible {
+    opacity: 1;
+}
+
+@keyframes tutorial-pulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.02);
+        opacity: 0.9;
+    }
+}
+
+/* ============================================
+   TOOLTIP - Pastel 90s style card
+   ============================================ */
+.tutorial-tooltip {
+    position: absolute;
+    background: linear-gradient(180deg, #faf3e0 0%, #f5e6d3 100%);
+    border: 4px solid #2d2d2d;
+    border-radius: 12px;
+    padding: 0;
+    max-width: 400px;
+    min-width: 320px;
+    box-shadow: 8px 8px 0 #2d2d2d;
+    z-index: 10001;
+    transition: left 0.4s ease, top 0.4s ease, transform 0.4s ease;
+    overflow: hidden;
+}
+
+.tutorial-tooltip.animate-in {
+    animation: tooltip-pop 0.3s ease-out;
+}
+
+@keyframes tooltip-pop {
+    0% {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Title bar - Pastel gradient like the game */
+.tutorial-tooltip::before {
+    content: '';
+    display: block;
+    height: 32px;
+    background: linear-gradient(90deg, #ffcc66 0%, #ffb3d9 100%);
+    border-bottom: 3px solid #2d2d2d;
+}
+
+/* Step indicator - positioned in title bar */
+.tutorial-step-indicator {
+    position: absolute;
+    top: 7px;
+    left: 12px;
+    font-family: 'Comic Sans MS', 'Chalkboard', cursive, sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    color: #2d2d2d;
+    text-shadow: 1px 1px 0 rgba(255,255,255,0.5);
+}
+
+/* Title */
+.tutorial-title {
+    font-family: 'Comic Sans MS', 'Chalkboard', cursive, sans-serif;
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #2d2d2d;
+    margin: 20px 20px 12px 20px;
+    text-shadow: 1px 1px 0 rgba(255,255,255,0.5);
+}
+
+/* Description text */
+.tutorial-text {
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #2d2d2d;
+    margin: 0 20px 20px 20px;
+}
+
+/* ============================================
+   BUTTONS - Chunky pastel 90s style
+   ============================================ */
+.tutorial-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    padding: 0 20px 20px 20px;
+    flex-wrap: wrap;
+}
+
+.tutorial-btn {
+    padding: 10px 20px;
+    font-family: 'Comic Sans MS', 'Chalkboard', cursive, sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    border: 3px solid #2d2d2d;
+    border-radius: 8px;
+    box-shadow: 4px 4px 0 #2d2d2d;
+    color: #2d2d2d;
+}
+
+.tutorial-btn:hover {
+    transform: translate(-1px, -1px);
+    box-shadow: 5px 5px 0 #2d2d2d;
+}
+
+.tutorial-btn:active {
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0 #2d2d2d;
+}
+
+.tutorial-btn.tutorial-next {
+    background: linear-gradient(180deg, #ffb6c1 0%, #ff69b4 100%);
+    min-width: 100px;
+}
+
+.tutorial-btn.tutorial-back {
+    background: linear-gradient(180deg, #a8e6ff 0%, #87ceeb 100%);
+}
+
+.tutorial-btn.tutorial-skip {
+    background: linear-gradient(180deg, #e6d5ff 0%, #d4b8ff 100%);
+}
+
+/* ============================================
+   TAP HINT - Animated finger tap indicator
+   ============================================ */
+.tutorial-tap-hint {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    opacity: 0;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    transition: opacity 0.3s ease;
+}
+
+.tutorial-tap-hint.visible {
+    opacity: 1;
+}
+
+.tutorial-tap-hint .tap-circle {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: rgba(255, 105, 180, 0.3);
+    border: 4px solid #ff69b4;
+    animation: tap-bounce 1.5s ease-in-out infinite;
+    position: relative;
+    box-shadow: 4px 4px 0 #2d2d2d;
+}
+
+.tutorial-tap-hint .tap-circle::before {
+    content: '👆';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 32px;
+    animation: tap-finger 1.5s ease-in-out infinite;
+}
+
+@keyframes tap-bounce {
+    0%, 100% {
+        transform: scale(1);
+        background: rgba(255, 105, 180, 0.3);
+    }
+    50% {
+        transform: scale(1.1);
+        background: rgba(255, 105, 180, 0.5);
+    }
+}
+
+@keyframes tap-finger {
+    0%, 100% {
+        transform: translate(-50%, -50%) scale(1);
+    }
+    50% {
+        transform: translate(-50%, -40%) scale(0.9);
+    }
+}
+
+.tutorial-tap-hint span {
+    font-family: 'Comic Sans MS', 'Chalkboard', cursive, sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    color: #fff8dc;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-shadow: 
+        2px 2px 0 #2d2d2d,
+        -1px -1px 0 #2d2d2d,
+        1px -1px 0 #2d2d2d,
+        -1px 1px 0 #2d2d2d;
+    animation: tap-text-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes tap-text-pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.8;
+    }
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 600px) {
+    .tutorial-tooltip {
+        max-width: calc(100vw - 40px);
+        min-width: 280px;
+    }
+    
+    .tutorial-title {
+        font-size: 1.2rem;
+    }
+    
+    .tutorial-text {
+        font-size: 0.9rem;
+    }
+    
+    .tutorial-buttons {
+        justify-content: center;
+    }
+    
+    .tutorial-btn {
+        padding: 8px 16px;
+        font-size: 13px;
+    }
+}

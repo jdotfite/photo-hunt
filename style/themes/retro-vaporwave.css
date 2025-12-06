@@ -290,10 +290,13 @@ body.display-4-3 .game {
   margin: 5px 10px 10px 10px;
 }
 
-/* Pellets - chunky with 2px border */
+/* Pellets - chunky with 2px border and subtle recess */
 .pellet {
   background: #ddd;
   border: 2px solid var(--border-dark);
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.4),
+    inset 0 -1px 2px rgba(0, 0, 0, 0.15);
 }
 
 .pellet.green {
@@ -922,20 +925,71 @@ canvas {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #4ecdc4;
+  background-color: #4ecdc4;
   background-image:
-    /* Stars/sparkles */
-    radial-gradient(circle, #ff69b4 3px, transparent 3px),
-    radial-gradient(circle, #ffe135 2px, transparent 2px),
-    radial-gradient(circle, #ff9ec4 2px, transparent 2px);
+    /* Squiggly diagonal lines */
+    repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 20px,
+      rgba(255, 105, 180, 0.3) 20px,
+      rgba(255, 105, 180, 0.3) 22px,
+      transparent 22px,
+      transparent 40px
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 30px,
+      rgba(255, 225, 53, 0.25) 30px,
+      rgba(255, 225, 53, 0.25) 32px,
+      transparent 32px,
+      transparent 60px
+    ),
+    /* Triangles */
+    linear-gradient(135deg, rgba(255, 105, 180, 0.4) 25%, transparent 25%),
+    linear-gradient(225deg, rgba(255, 105, 180, 0.4) 25%, transparent 25%),
+    linear-gradient(45deg, rgba(155, 89, 182, 0.3) 25%, transparent 25%),
+    linear-gradient(315deg, rgba(155, 89, 182, 0.3) 25%, transparent 25%),
+    /* Dots / circles */
+    radial-gradient(circle, rgba(255, 105, 180, 0.5) 8px, transparent 8px),
+    radial-gradient(circle, rgba(255, 225, 53, 0.5) 6px, transparent 6px),
+    radial-gradient(circle, rgba(255, 255, 255, 0.4) 4px, transparent 4px),
+    radial-gradient(circle, rgba(155, 89, 182, 0.4) 5px, transparent 5px),
+    /* Wavy horizontal stripes */
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 80px,
+      rgba(255, 255, 255, 0.1) 80px,
+      rgba(255, 255, 255, 0.1) 82px,
+      transparent 82px,
+      transparent 160px
+    );
   background-size: 
-    120px 100px,
-    80px 60px,
-    60px 80px;
+    100% 100%,
+    100% 100%,
+    80px 80px,
+    80px 80px,
+    60px 60px,
+    60px 60px,
+    200px 200px,
+    150px 120px,
+    100px 80px,
+    180px 160px,
+    100% 100%;
   background-position:
-    10px 20px,
-    40px 50px,
-    70px 30px;
+    0 0,
+    0 0,
+    0 0,
+    40px 40px,
+    0 30px,
+    30px 0,
+    25px 25px,
+    80px 60px,
+    40px 100px,
+    120px 40px,
+    0 0;
   z-index: 9999;
   animation: introFadeIn 0.5s ease-out;
 }
@@ -1075,11 +1129,12 @@ canvas {
   display: flex;
   gap: 25px;
   width: 100%;
-  flex: 1;
+  flex: 0 0 auto;
   min-height: 0;
   padding: 10px 0;
   position: relative;
   z-index: 1;
+  align-items: stretch;
 }
 
 /* Left Side: Game Preview */
@@ -1088,7 +1143,7 @@ canvas {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 25px;
 }
 
@@ -1215,14 +1270,16 @@ canvas {
 
 /* Right Side: High Scores */
 .intro-scores {
-  flex: 1;
+  flex: 0 0 280px;
   display: flex;
   flex-direction: column;
-  min-width: 280px;
+  align-items: center;
+  justify-content: stretch;
 }
 
 .scores-panel {
   flex: 1;
+  width: 280px;
   display: flex;
   flex-direction: column;
   background: linear-gradient(180deg, #2d2d2d 0%, #1a1a1a 100%);
@@ -1279,7 +1336,7 @@ canvas {
 .score-row {
   display: flex;
   align-items: center;
-  padding: 0 8px;
+  padding: 0 12px;
   min-height: 0;
   background: transparent;
   border-radius: 0;
@@ -1310,10 +1367,10 @@ canvas {
 }
 
 .score-rank {
-  width: 32px;
+  width: 24px;
   font-weight: bold;
   text-align: right;
-  margin-right: 6px;
+  margin-right: 8px;
   font-size: inherit;
   opacity: 0.8;
 }
@@ -1500,4 +1557,194 @@ canvas {
   .footer-decoration {
     display: none;
   }
+}
+
+/* ============================================
+   HOW TO PLAY SCREEN
+   ============================================ */
+
+.how-to-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 10000;
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.how-to-screen.hidden {
+  display: none;
+}
+
+.how-to-container {
+  background: linear-gradient(180deg, var(--window-cream) 0%, #e8dfd0 100%);
+  border: 5px solid var(--border-dark);
+  border-radius: 16px;
+  box-shadow: 
+    12px 12px 0 var(--shadow-color),
+    inset 0 0 0 4px var(--pastel-cream);
+  max-width: 500px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: slideUp 0.4s ease-out;
+}
+
+@keyframes slideUp {
+  from { 
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to { 
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.how-to-header {
+  background: linear-gradient(90deg, var(--title-bar) 0%, var(--title-bar-pink) 100%);
+  padding: 15px 20px;
+  border-bottom: 4px solid var(--border-dark);
+  text-align: center;
+}
+
+.how-to-title {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: bold;
+  color: var(--text-dark);
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  margin: 0;
+  text-shadow: 2px 2px 0 rgba(255, 255, 255, 0.5);
+}
+
+.how-to-content {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.how-to-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+  background: rgba(255, 255, 255, 0.5);
+  padding: 15px;
+  border-radius: 10px;
+  border: 3px solid var(--border-dark);
+  box-shadow: 4px 4px 0 var(--shadow-color);
+}
+
+.step-number {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(180deg, var(--hot-pink) 0%, #cc3366 100%);
+  color: var(--text-white);
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 3px solid var(--border-dark);
+  box-shadow: 2px 2px 0 var(--shadow-color);
+}
+
+.step-info {
+  flex: 1;
+}
+
+.step-title {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: bold;
+  color: var(--text-dark);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 5px;
+}
+
+.step-desc {
+  font-family: var(--font-system);
+  font-size: 14px;
+  color: var(--text-dark);
+  line-height: 1.4;
+  opacity: 0.9;
+}
+
+.how-to-close-btn {
+  display: block;
+  width: calc(100% - 40px);
+  margin: 0 20px 20px;
+  padding: 15px 30px;
+  background: linear-gradient(180deg, #4ecdc4 0%, #26a69a 50%, #1e8c82 100%);
+  color: var(--text-white);
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  border: 4px solid var(--border-dark);
+  border-radius: 50px;
+  cursor: pointer;
+  box-shadow: 
+    6px 6px 0 var(--shadow-color),
+    inset 0 3px 0 rgba(255, 255, 255, 0.3);
+  transition: all 0.15s ease;
+}
+
+.how-to-close-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    8px 8px 0 var(--shadow-color),
+    inset 0 3px 0 rgba(255, 255, 255, 0.4);
+}
+
+.how-to-close-btn:active {
+  transform: translateY(2px);
+  box-shadow: 
+    2px 2px 0 var(--shadow-color),
+    inset 0 -3px 0 rgba(255, 255, 255, 0.2);
+}
+
+/* How To Play Button in Footer */
+.how-to-btn {
+  background: linear-gradient(180deg, var(--pastel-lavender) 0%, #d4c4f0 100%);
+  color: var(--text-dark);
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 8px 16px;
+  border: 3px solid var(--border-dark);
+  border-radius: 20px;
+  cursor: pointer;
+  box-shadow: 3px 3px 0 var(--shadow-color);
+  transition: all 0.15s ease;
+}
+
+.how-to-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 5px 5px 0 var(--shadow-color);
+  background: linear-gradient(180deg, #e6d5ff 0%, var(--pastel-lavender) 100%);
+}
+
+.how-to-btn:active {
+  transform: translateY(1px);
+  box-shadow: 1px 1px 0 var(--shadow-color);
 }

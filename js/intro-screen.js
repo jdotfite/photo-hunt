@@ -9,6 +9,9 @@ class IntroScreen {
         this.gameScreen = document.getElementById('gameScreen');
         this.startBtn = document.getElementById('startGameBtn');
         this.scoresList = document.getElementById('highScoresList');
+        this.howToScreen = document.getElementById('howToScreen');
+        this.howToBtn = document.getElementById('howToBtn');
+        this.howToCloseBtn = document.getElementById('howToCloseBtn');
         this.onStart = null;
         
         this.init();
@@ -20,19 +23,62 @@ class IntroScreen {
         
         // Start button click
         if (this.startBtn) {
-            this.startBtn.addEventListener('click', () => this.startGame());
+            this.startBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                this.startGame();
+            });
         }
         
-        // Touch anywhere to start (excluding the button itself for double-trigger prevention)
+        // How-To button click - launches interactive tutorial
+        if (this.howToBtn) {
+            this.howToBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                this.startTutorial();
+            });
+        }
+        
+        // How-To close button click (legacy, kept for compatibility)
+        if (this.howToCloseBtn) {
+            this.howToCloseBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                this.hideHowTo();
+            });
+        }
+        
+        // Touch anywhere to start (excluding buttons and how-to screen)
         if (this.introScreen) {
             this.introScreen.addEventListener('click', (e) => {
+                // Don't start if how-to screen is visible
+                if (this.howToScreen && !this.howToScreen.classList.contains('hidden')) {
+                    return;
+                }
                 // Start game on any click
                 this.startGame();
             });
         }
         
-        // Keyboard start
+        // Click outside how-to screen to close it
+        if (this.howToScreen) {
+            this.howToScreen.addEventListener('click', (e) => {
+                // If clicking the backdrop (not the container), close it
+                if (e.target === this.howToScreen) {
+                    this.hideHowTo();
+                }
+            });
+        }
+        
+        // Keyboard navigation
         document.addEventListener('keydown', (e) => {
+            // If how-to screen is visible, Escape closes it
+            if (this.howToScreen && !this.howToScreen.classList.contains('hidden')) {
+                if (e.key === 'Escape') {
+                    e.preventDefault();
+                    this.hideHowTo();
+                }
+                return;
+            }
+            
+            // If intro screen is visible, Enter/Space starts game
             if (this.introScreen && !this.introScreen.classList.contains('hidden')) {
                 if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
@@ -48,7 +94,7 @@ class IntroScreen {
         const scores = window.highScores.getScores();
         
         let html = '';
-        for (let i = 0; i < 10; i++) {
+        for (let i = 0; i < 8; i++) {
             const score = scores[i];
             const rank = i + 1;
             const name = score ? score.name : '---';
@@ -100,6 +146,28 @@ class IntroScreen {
         this.gameScreen.classList.add('hidden');
         this.introScreen.classList.remove('hidden');
         this.introScreen.classList.remove('intro-exit');
+    }
+
+    showHowTo() {
+        if (this.howToScreen) {
+            this.howToScreen.classList.remove('hidden');
+        }
+    }
+
+    hideHowTo() {
+        if (this.howToScreen) {
+            this.howToScreen.classList.add('hidden');
+        }
+    }
+
+    startTutorial() {
+        // Launch the interactive tutorial
+        if (window.tutorial) {
+            window.tutorial.start();
+        } else {
+            // Fallback to old how-to screen if tutorial not loaded
+            this.showHowTo();
+        }
     }
 }
 

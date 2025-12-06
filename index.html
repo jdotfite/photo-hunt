@@ -15,6 +15,8 @@
   <link rel="stylesheet" href="style/layout.css">
   <!-- Virtual Keyboard -->
   <link rel="stylesheet" href="style/keyboard.css">
+  <!-- Tutorial overlay -->
+  <link rel="stylesheet" href="style/tutorial.css">
   <!-- Active Theme - colors & visual styling -->
   <link rel="stylesheet" href="style/themes/retro-vaporwave.css">
   <!-- Font overrides (must be after theme) -->
@@ -94,10 +96,67 @@
       <!-- Footer -->
       <div class="intro-footer">
         <div class="footer-decoration">✦ ✧ ✦ ✧ ✦</div>
+        <button class="how-to-btn" id="howToBtn">HOW TO PLAY</button>
         <div class="touch-prompt">TOUCH SCREEN TO START</div>
+        <button class="how-to-btn" id="howToBtn2" style="visibility: hidden;">HOW TO PLAY</button>
         <div class="footer-decoration">✦ ✧ ✦ ✧ ✦</div>
       </div>
 
+    </div>
+  </div>
+
+  <!-- ============================================
+       HOW TO PLAY SCREEN
+       ============================================ -->
+  <div class="how-to-screen hidden" id="howToScreen">
+    <div class="how-to-container">
+      <div class="how-to-header">
+        <h2 class="how-to-title">HOW TO PLAY</h2>
+      </div>
+      
+      <div class="how-to-content">
+        <div class="how-to-step">
+          <div class="step-number">1</div>
+          <div class="step-info">
+            <div class="step-title">SPOT THE DIFFERENCES</div>
+            <div class="step-desc">Two images are shown side by side. Find and tap the differences between them!</div>
+          </div>
+        </div>
+        
+        <div class="how-to-step">
+          <div class="step-number">2</div>
+          <div class="step-info">
+            <div class="step-title">EARN POINTS</div>
+            <div class="step-desc">Points count down as you play. Find differences quickly to earn more points!</div>
+          </div>
+        </div>
+        
+        <div class="how-to-step">
+          <div class="step-number">3</div>
+          <div class="step-info">
+            <div class="step-title">USE HINTS WISELY</div>
+            <div class="step-desc">Stuck? Use a hint to reveal a difference. You get 3 hints per round - unused hints give bonus points!</div>
+          </div>
+        </div>
+        
+        <div class="how-to-step">
+          <div class="step-number">4</div>
+          <div class="step-info">
+            <div class="step-title">AVOID MISTAKES</div>
+            <div class="step-desc">Wrong taps cost you points and time. Be accurate!</div>
+          </div>
+        </div>
+        
+        <div class="how-to-step">
+          <div class="step-number">5</div>
+          <div class="step-info">
+            <div class="step-title">BEAT THE CLOCK</div>
+            <div class="step-desc">Find all 5 differences before time runs out to advance to the next round!</div>
+          </div>
+        </div>
+      </div>
+      
+      <button class="how-to-close-btn" id="howToCloseBtn">GOT IT!</button>
     </div>
   </div>
 
@@ -193,6 +252,7 @@
   <script src="js/high-scores.js"></script>
   <script src="js/keyboard.js"></script>
   <script src="js/popup.js"></script>
+  <script src="js/tutorial.js"></script>
   <script src="js/intro-screen.js"></script>
   <script src="js/script.js"></script>
 </body>

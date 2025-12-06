@@ -196,10 +196,8 @@ class HighScores {
 
 // Create global instance for Photo Hunt
 window.highScores = new HighScores('photoHunt', {
-    maxScores: 10,
+    maxScores: 8,
     defaultScores: [
-        { name: 'Player', score: 0, date: Date.now() },
-        { name: 'Player', score: 0, date: Date.now() },
         { name: 'Player', score: 0, date: Date.now() },
         { name: 'Player', score: 0, date: Date.now() },
         { name: 'Player', score: 0, date: Date.now() },

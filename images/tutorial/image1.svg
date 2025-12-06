@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300">
+  <!-- Background - Sky -->
+  <rect width="400" height="300" fill="#87CEEB"/>
+  
+  <!-- Sun -->
+  <circle cx="320" cy="60" r="40" fill="#FFD700"/>
+  
+  <!-- Clouds -->
+  <ellipse cx="80" cy="50" rx="40" ry="20" fill="white"/>
+  <ellipse cx="60" cy="45" rx="25" ry="15" fill="white"/>
+  <ellipse cx="100" cy="45" rx="25" ry="15" fill="white"/>
+  
+  <!-- Ground -->
+  <rect x="0" y="200" width="400" height="100" fill="#228B22"/>
+  
+  <!-- House -->
+  <rect x="60" y="120" width="120" height="80" fill="#8B4513"/>
+  <!-- Roof -->
+  <polygon points="50,120 120,60 190,120" fill="#DC143C"/>
+  <!-- Door -->
+  <rect x="100" y="150" width="30" height="50" fill="#4a3728"/>
+  <!-- Window -->
+  <rect x="145" y="140" width="25" height="25" fill="#87CEEB"/>
+  <line x1="145" y1="152.5" x2="170" y2="152.5" stroke="#8B4513" stroke-width="2"/>
+  <line x1="157.5" y1="140" x2="157.5" y2="165" stroke="#8B4513" stroke-width="2"/>
+  
+  <!-- Tree -->
+  <rect x="270" y="150" width="20" height="50" fill="#8B4513"/>
+  <circle cx="280" cy="120" r="40" fill="#228B22"/>
+  
+  <!-- Flowers (3 flowers) -->
+  <circle cx="220" cy="220" r="8" fill="#FF69B4"/>
+  <circle cx="245" cy="230" r="8" fill="#FF69B4"/>
+  <circle cx="270" cy="215" r="8" fill="#FF69B4"/>
+  
+  <!-- Bird -->
+  <ellipse cx="150" cy="80" rx="12" ry="8" fill="#4169E1"/>
+  <polygon points="138,80 130,78 130,82" fill="#FFA500"/>
+  <circle cx="145" cy="78" r="2" fill="white"/>
+  
+  <!-- Fence -->
+  <rect x="200" y="180" width="8" height="30" fill="#DEB887"/>
+  <rect x="220" y="180" width="8" height="30" fill="#DEB887"/>
+  <rect x="240" y="180" width="8" height="30" fill="#DEB887"/>
+  <rect x="198" y="185" width="55" height="5" fill="#DEB887"/>
+  <rect x="198" y="195" width="55" height="5" fill="#DEB887"/>
+</svg>
