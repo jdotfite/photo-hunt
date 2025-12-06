@@ -94,13 +94,13 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Update the high score display in the header
     function updateHighScoreDisplay() {
-        if (window.highScores && highScoreNameElement && highScoreValueElement) {
+        if (window.highScores && highScoreValueElement) {
             const topScore = window.highScores.getTopScore();
             if (topScore) {
-                highScoreNameElement.textContent = topScore.name;
+                if (highScoreNameElement) highScoreNameElement.textContent = topScore.name;
                 highScoreValueElement.textContent = topScore.score.toLocaleString();
             } else {
-                highScoreNameElement.textContent = '---';
+                if (highScoreNameElement) highScoreNameElement.textContent = '---';
                 highScoreValueElement.textContent = '0';
             }
         }

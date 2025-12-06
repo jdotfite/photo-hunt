@@ -130,16 +130,16 @@ body.display-4-3 .game {
 .round-badge {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   background: var(--pastel-lavender);
-  padding: 4px 12px;
+  padding: 6px 14px;
   border-radius: 6px;
   border: 2px solid var(--border-dark);
 }
 
 .round-badge .round-label {
   font-family: var(--font-display);
-  font-size: 12px;
+  font-size: 16px;
   font-weight: bold;
   color: var(--text-dark);
   text-transform: uppercase;
@@ -149,7 +149,7 @@ body.display-4-3 .game {
 
 .round-badge .round-value {
   font-family: var(--font-pixel);
-  font-size: 20px;
+  font-size: 26px;
   font-weight: bold;
   color: var(--text-dark);
   line-height: 1;
@@ -171,23 +171,33 @@ body.display-4-3 .game {
   background: rgba(255,255,255,0.3);
   border-radius: 6px;
   border: 2px solid var(--text-dark);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  white-space: nowrap;
 }
 
 .title-bar .high-score-display .label {
   font-family: var(--font-display);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: bold;
   color: var(--text-dark);
-  opacity: 0.7;
+  opacity: 0.8;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 1px;
+}
+
+.title-bar .high-score-display .label::after {
+  content: ':';
 }
 
 .title-bar .high-score-display .value {
   font-family: var(--font-pixel);
-  font-size: 16px;
+  font-size: 22px;
   font-weight: bold;
-  color: var(--text-dark);
+  color: #4a4a4a;
   display: flex;
   align-items: center;
   gap: 6px;
@@ -195,24 +205,119 @@ body.display-4-3 .game {
 
 .title-bar .high-score-display #highScoreName {
   font-family: var(--font-display);
-  font-size: 14px;
+  font-size: 16px;
   font-weight: bold;
-  color: var(--purple);
-  text-shadow: 0 0 1px rgba(255,255,255,0.5);
-  max-width: 70px;
+  color: #4a4a4a;
+  max-width: 80px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  text-transform: uppercase;
 }
 
 /* ============================================
-   HEADER BAR - Score, Differences, Hints
+   UNIFIED GAME HUD - All game info in one bar
+   Single container replacing title-bar + status-bar
+   ============================================ */
+
+.game-hud {
+  background: var(--window-bg);
+  margin: 10px 10px 10px 10px;
+}
+
+.hud-row-info {
+  background: linear-gradient(90deg, var(--title-bar) 0%, var(--title-bar-pink) 100%);
+}
+
+.hud-row-timer {
+  background: linear-gradient(135deg, var(--pastel-sky) 0%, var(--pastel-mint) 50%, var(--pastel-yellow) 100%);
+}
+
+/* Round badge in HUD - more compact */
+.game-hud .round-badge {
+  background: var(--pastel-lavender);
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 2px solid var(--border-dark);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.game-hud .round-badge .round-label {
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: bold;
+  color: var(--text-dark);
+  text-transform: uppercase;
+  opacity: 0.8;
+}
+
+.game-hud .round-badge .round-value {
+  font-family: var(--font-pixel);
+  font-size: 18px;
+  font-weight: bold;
+  color: var(--text-dark);
+  line-height: 1;
+}
+
+/* High score compact - subtle, doesn't distract */
+.high-score-compact {
+  background: rgba(255,255,255,0.3);
+  border-radius: 6px;
+  border: 2px solid var(--border-dark);
+}
+
+.high-score-compact .label {
+  font-family: var(--font-display);
+  color: var(--text-dark);
+}
+
+.high-score-compact .value {
+  font-family: var(--font-pixel);
+  color: var(--purple);
+}
+
+/* Hints container - remove label, just show buttons */
+.game-hud .hints-container {
+  gap: 4px;
+}
+
+.game-hud .hints-container .label {
+  display: none; /* Icons are self-explanatory */
+}
+
+/* ============================================
+   COMBINED STATUS BAR - Unified container
+   Single shadow for Score/Found/Hints + Timer
+   ============================================ */
+
+.status-bar {
+  background: var(--window-bg);
+  margin: 10px 10px 10px 10px;
+}
+
+.status-row-top {
+  background: var(--window-bg);
+  border-bottom: 2px solid var(--border-dark);
+}
+
+.status-row-bottom {
+  background: linear-gradient(135deg, var(--pastel-sky) 0%, var(--pastel-mint) 50%, var(--pastel-yellow) 100%);
+}
+
+/* ============================================
+   TITLE BAR - Game Title with High Score
    Border/shadow/radius handled by utility classes
    ============================================ */
 
-.header-bar {
-  background: var(--window-bg);
+.title-bar {
+  background: linear-gradient(90deg, var(--title-bar) 0%, var(--title-bar-pink) 100%);
   margin: 10px 10px 5px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
 }
 
 .header-bar .label {
@@ -224,6 +329,23 @@ body.display-4-3 .game {
   opacity: 0.8;
 }
 
+/* Status row labels - consistent styling */
+.status-row .label {
+  font-family: var(--font-display);
+  font-size: 19px;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: var(--text-dark);
+  opacity: 0.8;
+}
+
+/* Display Panel - Recessed LCD-style look for info displays */
+.display-panel {
+  box-shadow: 
+    inset 2px 2px 4px rgba(0, 0, 0, 0.2),
+    inset -1px -1px 2px rgba(255, 255, 255, 0.5);
+}
+
 /* Total Score - uses utility classes for border/shadow/radius */
 .total-score {
   background: var(--pastel-mint);
@@ -232,7 +354,7 @@ body.display-4-3 .game {
 
 .total-score .value {
   font-family: var(--font-pixel);
-  font-size: 28px;
+  font-size: 24px;
   font-weight: bold;
   color: var(--text-dark);
 }
@@ -252,25 +374,44 @@ body.display-4-3 .game {
 
 .hints-container .label {
   margin-right: 6px;
+  font-family: var(--font-display);
+  font-size: 19px;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: var(--text-dark);
+  opacity: 0.8;
 }
 
-/* Hint Buttons - uses utility classes for border/shadow/radius */
+/* Hint Buttons - Raised 3D clickable buttons */
 .hint-btn {
-  width: 38px;
-  height: 38px;
-  background: var(--hot-pink);
+  width: 46px;
+  height: 46px;
+  background: linear-gradient(180deg, #ff85c0 0%, var(--hot-pink) 50%, #e84a9c 100%);
   color: var(--text-white);
   transition: transform 0.15s, box-shadow 0.15s;
+  cursor: pointer;
+  /* Extra highlight for 3D raised effect */
+  box-shadow: 
+    3px 3px 0 var(--shadow-color),
+    inset 0 2px 0 rgba(255, 255, 255, 0.3),
+    inset 0 -2px 0 rgba(0, 0, 0, 0.2);
 }
 
 .hint-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 3px 4px 0 var(--shadow-color);
+  box-shadow: 
+    4px 5px 0 var(--shadow-color),
+    inset 0 2px 0 rgba(255, 255, 255, 0.4),
+    inset 0 -2px 0 rgba(0, 0, 0, 0.2);
+  background: linear-gradient(180deg, #ff9dcc 0%, #ff7ab8 50%, #e84a9c 100%);
 }
 
 .hint-btn:active {
-  transform: translateY(1px);
-  box-shadow: 1px 1px 0 var(--shadow-color);
+  transform: translateY(2px);
+  box-shadow: 
+    1px 1px 0 var(--shadow-color),
+    inset 0 2px 0 rgba(0, 0, 0, 0.1),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.2);
 }
 
 .hint-btn.used {
@@ -283,6 +424,7 @@ body.display-4-3 .game {
    TIMER BAR - Unified Time & Points Display
    Uses utility classes for border/shadow/radius
    Layout handled by layout.css
+   Also applies to status-row-bottom in combined bar
    ============================================ */
 
 .timer-bar {
@@ -389,14 +531,9 @@ body.display-4-3 .game {
   font-family: var(--font-display);
   font-size: 16px;
   font-weight: bold;
-  padding: 10px 15px;
-  margin: 8px 10px;
-  border: 3px solid var(--border-dark);
-  border-radius: 8px;
   text-align: center;
   text-transform: uppercase;
   letter-spacing: 1px;
-  box-shadow: 4px 4px 0 var(--shadow-color);
   transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 

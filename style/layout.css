@@ -63,7 +63,33 @@
 }
 
 /* ============================================
-   HEADER BAR - Score & Status
+   COMBINED STATUS BAR - Score, Found, Hints + Timer
+   Single unified container with shared shadow
+   ============================================ */
+.status-bar {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.status-row {
+  display: flex;
+  align-items: center;
+  padding: var(--gap-sm) var(--gap-md);
+  gap: var(--gap-md);
+}
+
+.status-row-top {
+  justify-content: space-between;
+}
+
+.status-row-bottom {
+  justify-content: center;
+}
+
+/* ============================================
+   HEADER BAR - Score & Status (legacy support)
    ============================================ */
 .header-bar {
   display: flex;
@@ -114,7 +140,7 @@
 
 /* ============================================
    TIMER BAR - Clock, Pellets, Round Score
-   Unified visual container for time display
+   Now lives inside status-row-bottom
    ============================================ */
 .timer-bar {
   display: flex;
@@ -124,6 +150,12 @@
   padding: var(--gap-md);
   gap: var(--gap-md);
   position: relative;
+}
+
+/* Timer elements also work inside status-row-bottom */
+.status-row-bottom {
+  gap: var(--gap-md);
+  padding: var(--gap-sm) var(--gap-md);
 }
 
 .clock-icon {
