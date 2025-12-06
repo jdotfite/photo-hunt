@@ -29,12 +29,7 @@
 
 /* Main Container */
 .keyboard-container {
-    background: linear-gradient(180deg, 
-        #faf3e0 0%, 
-        #f5e6d3 30%, 
-        #e8dfd0 70%,
-        #f5e6d3 100%
-    );
+    background: var(--window-cream, #faf3e0);
     border-radius: 16px;
     padding: 30px 40px 35px;
     border: 5px solid #2d2d2d;
@@ -59,10 +54,11 @@
 /* Header - Title Area */
 .keyboard-header {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 20px;
-    margin-bottom: 8px;
+    gap: 10px;
+    margin-bottom: 16px;
 }
 
 .keyboard-title {
@@ -110,27 +106,55 @@
 
 .keyboard-rank {
     font-family: var(--font-display, 'Fredoka', sans-serif);
-    font-size: 32px;
-    font-weight: bold;
-    color: #c4a000;
-    text-shadow: 
-        2px 2px 0 #8a7000,
-        -1px -1px 0 #ffe066,
-        3px 3px 6px rgba(0, 0, 0, 0.3);
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text-dark, #2d2d2d);
+    background: var(--pastel-lavender, #e6d5ff);
+    padding: 6px 16px;
+    border-radius: 8px;
+    border: 2px solid var(--border-dark, #2d2d2d);
+    /* Recessed LCD-style look like display-panel */
+    box-shadow: 
+        inset 2px 2px 4px rgba(0, 0, 0, 0.2),
+        inset -1px -1px 2px rgba(255, 255, 255, 0.5);
 }
 
 .keyboard-highscore-label {
     font-family: var(--font-display, 'Comic Sans MS', cursive);
-    font-size: 18px;
+    font-size: 48px;
     font-weight: bold;
-    color: #2d2d2d;
-    background: linear-gradient(180deg, #98fb98 0%, #6bcb77 100%);
-    padding: 8px 20px;
-    border-radius: 20px;
-    border: 3px solid #2d2d2d;
-    box-shadow: 3px 3px 0 #2d2d2d;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 4px;
+    background: none;
+    padding: 0;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+/* Split the text into colored spans - styled like intro title */
+.keyboard-highscore-label .hs-new {
+    color: var(--hot-pink, #ff69b4);
+    text-shadow: 
+        4px 4px 0 var(--border-dark, #2d2d2d),
+        -2px -2px 0 #fff,
+        6px 6px 0 rgba(0, 0, 0, 0.2);
+}
+
+.keyboard-highscore-label .hs-high {
+    color: var(--sunny-yellow, #ffe135);
+    text-shadow: 
+        4px 4px 0 var(--border-dark, #2d2d2d),
+        -2px -2px 0 #fff,
+        6px 6px 0 rgba(0, 0, 0, 0.2);
+}
+
+.keyboard-highscore-label .hs-score {
+    color: var(--pastel-mint, #b2f5ea);
+    text-shadow: 
+        4px 4px 0 var(--border-dark, #2d2d2d),
+        -2px -2px 0 #fff,
+        6px 6px 0 rgba(0, 0, 0, 0.2);
 }
 
 /* Legacy badge - hidden now */
@@ -143,7 +167,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: linear-gradient(180deg, #a8e6ff 0%, #b2f5ea 50%, #fff59d 100%);
+    background: var(--pastel-mint, #b2f5ea);
     border-radius: 12px;
     padding: 16px 25px;
     margin-bottom: 22px;
@@ -245,11 +269,17 @@
         inset 0 2px 0 rgba(255, 255, 255, 0.8);
 }
 
-.keyboard-key:active {
-    transform: translateY(2px);
+.keyboard-key:active,
+.keyboard-key.pressed {
+    transform: translateY(3px) scale(0.97);
     box-shadow: 
         1px 1px 0 #2d2d2d,
-        inset 0 2px 0 rgba(255, 255, 255, 0.5);
+        inset 0 1px 3px rgba(0, 0, 0, 0.2);
+    background: linear-gradient(180deg, 
+        #f0f0f0 0%, 
+        #e8e8e8 50%,
+        #f0f0f0 100%
+    );
 }
 
 /* Action Keys Row */
@@ -274,6 +304,15 @@
 
 .keyboard-key-backspace:hover {
     background: linear-gradient(180deg, #ff69b4 0%, #ff1493 50%, #ff69b4 100%);
+}
+
+.keyboard-key-backspace:active,
+.keyboard-key-backspace.pressed {
+    transform: translateY(3px) scale(0.97);
+    box-shadow: 
+        1px 1px 0 #2d2d2d,
+        inset 0 1px 3px rgba(0, 0, 0, 0.2);
+    background: linear-gradient(180deg, #ff69b4 0%, #e84a9c 50%, #ff69b4 100%);
 }
 
 .keyboard-key-space {
@@ -313,10 +352,17 @@
         inset 0 2px 0 rgba(255, 255, 255, 0.4);
 }
 
-.keyboard-key-done:active {
+.keyboard-key-done:active,
+.keyboard-key-done.pressed {
+    transform: translateY(3px) scale(0.97);
     box-shadow: 
         1px 1px 0 #2d2d2d,
-        inset 0 2px 0 rgba(255, 255, 255, 0.5);
+        inset 0 1px 3px rgba(0, 0, 0, 0.2);
+    background: linear-gradient(180deg, 
+        #26a69a 0%, 
+        #1a7a70 50%,
+        #26a69a 100%
+    );
 }
 
 /* Responsive adjustments */

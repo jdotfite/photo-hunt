@@ -47,19 +47,11 @@ class VirtualKeyboard {
     }
 
     render() {
-        const rankDisplay = this.rank ? `#${this.rank}` : '';
+        const rankDisplay = this.rank ? `You placed #${this.rank}!` : '';
         
         this.container.innerHTML = `
             <div class="keyboard-header">
-                <div class="keyboard-title">
-                    <span class="title-photo">PHOTO</span>
-                    <span class="title-hunt">HUNT</span>
-                </div>
-            </div>
-            
-            <div class="keyboard-subtitle">
-                <span class="keyboard-rank">${rankDisplay}</span>
-                <span class="keyboard-highscore-label">NEW HIGH SCORE!</span>
+                <span class="keyboard-highscore-label"><span class="hs-new">NEW</span> <span class="hs-high">HIGH</span> <span class="hs-score">SCORE!</span></span>
                 <span class="keyboard-rank">${rankDisplay}</span>
             </div>
             
@@ -118,24 +110,40 @@ class VirtualKeyboard {
     attachEventListeners() {
         // Key buttons - use mousedown/touchstart for immediate feedback
         this.container.querySelectorAll('.keyboard-key[data-key]').forEach(btn => {
-            const handler = (e) => {
+            const pressHandler = (e) => {
                 e.preventDefault();
+                btn.classList.add('pressed');
                 this.playKeySound();
                 this.addCharacter(btn.dataset.key);
             };
-            btn.addEventListener('mousedown', handler);
-            btn.addEventListener('touchstart', handler, { passive: false });
+            const releaseHandler = () => {
+                btn.classList.remove('pressed');
+            };
+            btn.addEventListener('mousedown', pressHandler);
+            btn.addEventListener('touchstart', pressHandler, { passive: false });
+            btn.addEventListener('mouseup', releaseHandler);
+            btn.addEventListener('mouseleave', releaseHandler);
+            btn.addEventListener('touchend', releaseHandler);
+            btn.addEventListener('touchcancel', releaseHandler);
         });
 
         // Action buttons - use mousedown/touchstart for immediate feedback
         this.container.querySelectorAll('.keyboard-key[data-action]').forEach(btn => {
-            const handler = (e) => {
+            const pressHandler = (e) => {
                 e.preventDefault();
+                btn.classList.add('pressed');
                 this.playKeySound();
                 this.handleAction(btn.dataset.action);
             };
-            btn.addEventListener('mousedown', handler);
-            btn.addEventListener('touchstart', handler, { passive: false });
+            const releaseHandler = () => {
+                btn.classList.remove('pressed');
+            };
+            btn.addEventListener('mousedown', pressHandler);
+            btn.addEventListener('touchstart', pressHandler, { passive: false });
+            btn.addEventListener('mouseup', releaseHandler);
+            btn.addEventListener('mouseleave', releaseHandler);
+            btn.addEventListener('touchend', releaseHandler);
+            btn.addEventListener('touchcancel', releaseHandler);
         });
 
         // Physical keyboard support
