@@ -528,6 +528,25 @@ document.addEventListener("DOMContentLoaded", function() {
                     hintIcon.style.transform = '';
                 }, 300);
                 
+                // Create floating bonus text
+                const bonusText = document.createElement('div');
+                bonusText.className = 'hint-bonus-popup';
+                bonusText.textContent = '+1000 BONUS!';
+                
+                // Position near the hint icon
+                const hintRect = hintIcon.getBoundingClientRect();
+                const container = hintIcon.closest('.hints-container');
+                bonusText.style.position = 'absolute';
+                bonusText.style.left = hintRect.left + hintRect.width / 2 + 'px';
+                bonusText.style.top = hintRect.top + 'px';
+                
+                document.body.appendChild(bonusText);
+                
+                // Remove after animation
+                setTimeout(() => {
+                    bonusText.remove();
+                }, 2000);
+                
                 if (index === remainingHints.length - 1) {
                     setTimeout(() => {
                         startNextRound();

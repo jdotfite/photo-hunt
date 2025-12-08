@@ -227,3 +227,42 @@ img {
 .hint-btn.pulse {
   animation: hint-pulse 0.8s ease-in-out 3;
 }
+
+/* ============================================
+   HINT BONUS POPUP - Animated bonus text
+   ============================================ */
+.hint-bonus-popup {
+  position: fixed;
+  transform: translateX(-50%);
+  font-size: 32px;
+  font-weight: bold;
+  color: #FFD700;
+  text-shadow: 
+    2px 2px 0 #000,
+    -2px -2px 0 #000,
+    2px -2px 0 #000,
+    -2px 2px 0 #000,
+    0 0 20px #FFD700,
+    0 0 40px #FFD700;
+  pointer-events: none;
+  z-index: 10000;
+  animation: float-up-bonus 2s ease-out forwards;
+  white-space: nowrap;
+}
+
+@keyframes float-up-bonus {
+  0% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0) scale(0.5);
+  }
+  20% {
+    transform: translateX(-50%) translateY(-10px) scale(1.2);
+  }
+  40% {
+    transform: translateX(-50%) translateY(-20px) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-120px) scale(1);
+  }
+}
