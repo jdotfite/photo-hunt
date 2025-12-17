@@ -35,9 +35,9 @@
                 },
                 {
                     "x": 338,
-                    "y": 458,
+                    "y": 459,
                     "width": 91,
-                    "height": 63
+                    "height": 62
                 }
             ]
         },
@@ -46,40 +46,39 @@
             "image1": "images/set2/image1.png",
             "image2": "images/set2/image2.png",
             "tags": [
-                "nature",
-                "outdoor"
+                "default"
             ],
             "difficulty": "medium",
             "differences": [
                 {
-                    "x": 424,
-                    "y": 686,
-                    "width": 212,
-                    "height": 338
+                    "x": 421,
+                    "y": 683,
+                    "width": 217,
+                    "height": 341
                 },
                 {
-                    "x": 749,
-                    "y": 255,
-                    "width": 100,
-                    "height": 129
+                    "x": 746,
+                    "y": 252,
+                    "width": 104,
+                    "height": 134
                 },
                 {
-                    "x": 45,
-                    "y": 504,
-                    "width": 111,
-                    "height": 92
+                    "x": 42,
+                    "y": 501,
+                    "width": 116,
+                    "height": 97
                 },
                 {
-                    "x": 282,
-                    "y": 865,
-                    "width": 152,
-                    "height": 68
+                    "x": 279,
+                    "y": 862,
+                    "width": 157,
+                    "height": 73
                 },
                 {
-                    "x": 489,
-                    "y": 895,
-                    "width": 10,
-                    "height": 10
+                    "x": 288,
+                    "y": 145,
+                    "width": 64,
+                    "height": 66
                 }
             ]
         },
