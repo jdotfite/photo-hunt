@@ -58,7 +58,7 @@ def find_all_sets():
     return sorted(sets)
 
 
-def process_set(set_id, min_area=900, merge_distance=50, visualize=False):
+def process_set(set_id, min_area=900, merge_distance=50, visualize=False, target_count=5):
     """Process a single set and return result"""
     set_dir = IMAGES_DIR / f"set{set_id}"
     image1_path = set_dir / "image1.png"
@@ -72,16 +72,28 @@ def process_set(set_id, min_area=900, merge_distance=50, visualize=False):
             image2_path,
             min_contour_area=min_area,
             merge_distance=merge_distance,
-            visualize=visualize
+            visualize=visualize,
+            target_count=target_count
         )
         
         if not differences:
-            print("⚠ No differences found!")
+            print("❌ No differences found!")
+            return {
+                "set_id": set_id,
+                "status": "error",
+                "differences": 0,
+                "message": "No differences detected"
+            }
+        
+        # Check if we got exactly the target count
+        if len(differences) != target_count:
+            print(f"⚠ Found {len(differences)} (expected {target_count})")
             return {
                 "set_id": set_id,
                 "status": "warning",
-                "differences": 0,
-                "message": "No differences detected"
+                "differences": len(differences),
+                "difficulty": "unknown",
+                "message": f"Found {len(differences)} differences instead of {target_count}"
             }
         
         # Auto-detect tags based on folder (you can enhance this)
@@ -136,6 +148,8 @@ Examples:
                         help='Minimum contour area to detect (default: 900)')
     parser.add_argument('--merge-distance', type=int, default=50,
                         help='Distance to merge nearby differences (default: 50)')
+    parser.add_argument('--target-count', type=int, default=5,
+                        help='Target number of differences per set (default: 5)')
     
     args = parser.parse_args()
     
@@ -177,7 +191,8 @@ Examples:
             set_id,
             min_area=args.min_area,
             merge_distance=args.merge_distance,
-            visualize=args.visualize
+            visualize=args.visualize,
+            target_count=args.target_count
         )
         results.append(result)
     

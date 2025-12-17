@@ -1152,6 +1152,7 @@ canvas {
 .preview-frame {
   width: 100%;
   max-width: 320px;
+  aspect-ratio: 4/3;
   background: linear-gradient(135deg, var(--neon-pink) 0%, var(--neon-purple) 50%, var(--neon-cyan) 100%);
   padding: 4px;
   border-radius: 4px;
@@ -1166,13 +1167,24 @@ canvas {
   border-radius: 2px;
   overflow: hidden;
   background: var(--dark-bg);
+  display: flex;
+  height: 100%;
 }
 
 .preview-img {
-  width: 100%;
+  width: 50%;
+  height: 100%;
   display: block;
-  aspect-ratio: 4/3;
   object-fit: cover;
+  object-position: center;
+}
+
+.preview-img-left {
+  border-right: 4px solid #000000;
+}
+
+.preview-img-right {
+  border-left: 2px solid var(--neon-pink);
 }
 
 .preview-badge {

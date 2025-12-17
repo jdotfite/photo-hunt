@@ -39,7 +39,7 @@ def save_sets_json(data):
         json.dump(data, f, indent=4)
 
 
-def find_differences(image1_path, image2_path, min_contour_area=900, merge_distance=50, visualize=False):
+def find_differences(image1_path, image2_path, min_contour_area=900, merge_distance=50, visualize=False, target_count=5):
     """
     Find differences between two images using computer vision
     
@@ -49,6 +49,7 @@ def find_differences(image1_path, image2_path, min_contour_area=900, merge_dista
         min_contour_area: Minimum area to consider as a difference
         merge_distance: Distance to merge nearby differences
         visualize: Show visual preview of detected differences
+        target_count: Target number of differences (default: 5)
         
     Returns:
         List of difference dictionaries with x, y, width, height
@@ -95,14 +96,38 @@ def find_differences(image1_path, image2_path, min_contour_area=900, merge_dista
     # Find contours of the differences
     contours, _ = cv2.findContours(dilated, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
-    differences = []
+    # Get all differences sorted by area (largest first)
+    all_differences = []
     for contour in contours:
-        # Only consider contours with an area larger than the minimum area
-        if cv2.contourArea(contour) >= min_contour_area:
+        area = cv2.contourArea(contour)
+        if area >= min_contour_area:
             x, y, w, h = cv2.boundingRect(contour)
-            differences.append({"x": int(x), "y": int(y), "width": int(w), "height": int(h)})
-
-    print(f"✓ Found {len(differences)} differences")
+            all_differences.append({
+                "x": int(x), 
+                "y": int(y), 
+                "width": int(w), 
+                "height": int(h),
+                "area": area
+            })
+    
+    # Sort by area (largest first)
+    all_differences.sort(key=lambda d: d['area'], reverse=True)
+    
+    # Remove area field before returning
+    differences = [{k: v for k, v in d.items() if k != 'area'} for d in all_differences[:target_count]]
+    
+    found_count = len(all_differences)
+    print(f"✓ Found {found_count} differences (using top {len(differences)})")
+    
+    # Warn if not exactly target count
+    if found_count != target_count:
+        if found_count < target_count:
+            print(f"⚠ WARNING: Only found {found_count} differences (expected {target_count})")
+            print(f"   Try decreasing --min-area or --merge-distance")
+        else:
+            print(f"⚠ WARNING: Found {found_count} differences (expected {target_count})")
+            print(f"   Using the {target_count} largest differences")
+            print(f"   Consider increasing --min-area or --merge-distance")
     
     # Visualize if requested
     if visualize and differences:
@@ -218,6 +243,8 @@ Examples:
                         help='Minimum contour area to detect (default: 900)')
     parser.add_argument('--merge-distance', type=int, default=50,
                         help='Distance to merge nearby differences (default: 50)')
+    parser.add_argument('--target-count', type=int, default=5,
+                        help='Target number of differences (default: 5)')
     parser.add_argument('--visualize', action='store_true',
                         help='Show visual preview of detected differences')
     
@@ -248,12 +275,17 @@ Examples:
             image2_path,
             min_contour_area=args.min_area,
             merge_distance=args.merge_distance,
-            visualize=args.visualize
+            visualize=args.visualize,
+            target_count=args.target_count
         )
         
         if not differences:
-            print("\n⚠ Warning: No differences found!")
+            print("\n❌ Error: No differences found!")
             print("   Try adjusting --min-area or --merge-distance parameters")
+            sys.exit(1)
+        
+        if len(differences) != args.target_count:
+            print(f"\n⚠ Warning: Found {len(differences)} differences (expected {args.target_count})")
             response = input("   Continue anyway? (y/N): ")
             if response.lower() != 'y':
                 sys.exit(0)

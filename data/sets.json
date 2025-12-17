@@ -5,10 +5,9 @@
             "image1": "images/set1/image1.png",
             "image2": "images/set1/image2.png",
             "tags": [
-                "outdoor",
-                "nature"
+                "default"
             ],
-            "difficulty": "easy",
+            "difficulty": "medium",
             "differences": [
                 {
                     "x": 697,
@@ -23,10 +22,10 @@
                     "height": 159
                 },
                 {
-                    "x": 338,
-                    "y": 458,
-                    "width": 91,
-                    "height": 63
+                    "x": 860,
+                    "y": 45,
+                    "width": 74,
+                    "height": 105
                 },
                 {
                     "x": 935,
@@ -35,10 +34,340 @@
                     "height": 78
                 },
                 {
-                    "x": 860,
-                    "y": 45,
-                    "width": 74,
+                    "x": 338,
+                    "y": 458,
+                    "width": 91,
+                    "height": 63
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "image1": "images/set2/image1.png",
+            "image2": "images/set2/image2.png",
+            "tags": [
+                "nature",
+                "outdoor"
+            ],
+            "difficulty": "medium",
+            "differences": [
+                {
+                    "x": 424,
+                    "y": 686,
+                    "width": 212,
+                    "height": 338
+                },
+                {
+                    "x": 749,
+                    "y": 255,
+                    "width": 100,
+                    "height": 129
+                },
+                {
+                    "x": 45,
+                    "y": 504,
+                    "width": 111,
+                    "height": 92
+                },
+                {
+                    "x": 282,
+                    "y": 865,
+                    "width": 152,
+                    "height": 68
+                },
+                {
+                    "x": 489,
+                    "y": 895,
+                    "width": 10,
+                    "height": 10
+                }
+            ]
+        },
+        {
+            "id": 3,
+            "image1": "images/set3/image1.png",
+            "image2": "images/set3/image2.png",
+            "tags": [
+                "default"
+            ],
+            "difficulty": "medium",
+            "differences": [
+                {
+                    "x": 117,
+                    "y": 751,
+                    "width": 105,
+                    "height": 169
+                },
+                {
+                    "x": 831,
+                    "y": 778,
+                    "width": 193,
+                    "height": 84
+                },
+                {
+                    "x": 125,
+                    "y": 96,
+                    "width": 77,
+                    "height": 184
+                },
+                {
+                    "x": 505,
+                    "y": 564,
+                    "width": 100,
+                    "height": 119
+                },
+                {
+                    "x": 366,
+                    "y": 63,
+                    "width": 113,
+                    "height": 101
+                }
+            ]
+        },
+        {
+            "id": 4,
+            "image1": "images/set4/image1.png",
+            "image2": "images/set4/image2.png",
+            "tags": [
+                "default"
+            ],
+            "difficulty": "medium",
+            "differences": [
+                {
+                    "x": 359,
+                    "y": 839,
+                    "width": 207,
+                    "height": 134
+                },
+                {
+                    "x": 938,
+                    "y": 48,
+                    "width": 86,
+                    "height": 139
+                },
+                {
+                    "x": 727,
+                    "y": 450,
+                    "width": 131,
+                    "height": 107
+                },
+                {
+                    "x": 214,
+                    "y": 52,
+                    "width": 130,
+                    "height": 83
+                },
+                {
+                    "x": 425,
+                    "y": 151,
+                    "width": 85,
+                    "height": 65
+                }
+            ]
+        },
+        {
+            "id": 5,
+            "image1": "images/set5/image1.png",
+            "image2": "images/set5/image2.png",
+            "tags": [
+                "default"
+            ],
+            "difficulty": "medium",
+            "differences": [
+                {
+                    "x": 799,
+                    "y": 486,
+                    "width": 135,
+                    "height": 137
+                },
+                {
+                    "x": 82,
+                    "y": 190,
+                    "width": 135,
+                    "height": 101
+                },
+                {
+                    "x": 214,
+                    "y": 762,
+                    "width": 113,
+                    "height": 103
+                },
+                {
+                    "x": 278,
+                    "y": 337,
+                    "width": 104,
+                    "height": 94
+                },
+                {
+                    "x": 510,
+                    "y": 479,
+                    "width": 92,
+                    "height": 99
+                }
+            ]
+        },
+        {
+            "id": 6,
+            "image1": "images/set6/image1.png",
+            "image2": "images/set6/image2.png",
+            "tags": [
+                "default"
+            ],
+            "difficulty": "medium",
+            "differences": [
+                {
+                    "x": 10,
+                    "y": 0,
+                    "width": 802,
+                    "height": 211
+                },
+                {
+                    "x": 0,
+                    "y": 410,
+                    "width": 127,
+                    "height": 163
+                },
+                {
+                    "x": 371,
+                    "y": 728,
+                    "width": 150,
+                    "height": 128
+                },
+                {
+                    "x": 340,
+                    "y": 575,
+                    "width": 99,
+                    "height": 143
+                },
+                {
+                    "x": 964,
+                    "y": 836,
+                    "width": 60,
+                    "height": 124
+                }
+            ]
+        },
+        {
+            "id": 7,
+            "image1": "images/set7/image1.png",
+            "image2": "images/set7/image2.png",
+            "tags": [
+                "default"
+            ],
+            "difficulty": "medium",
+            "differences": [
+                {
+                    "x": 0,
+                    "y": 55,
+                    "width": 130,
+                    "height": 193
+                },
+                {
+                    "x": 862,
+                    "y": 597,
+                    "width": 157,
+                    "height": 148
+                },
+                {
+                    "x": 801,
+                    "y": 0,
+                    "width": 223,
+                    "height": 82
+                },
+                {
+                    "x": 918,
+                    "y": 194,
+                    "width": 73,
                     "height": 105
+                },
+                {
+                    "x": 491,
+                    "y": 341,
+                    "width": 99,
+                    "height": 68
+                }
+            ]
+        },
+        {
+            "id": 8,
+            "image1": "images/set8/image1.png",
+            "image2": "images/set8/image2.png",
+            "tags": [
+                "nature",
+                "outdoor"
+            ],
+            "difficulty": "medium",
+            "differences": [
+                {
+                    "x": 251,
+                    "y": 581,
+                    "width": 126,
+                    "height": 143
+                },
+                {
+                    "x": 506,
+                    "y": 188,
+                    "width": 120,
+                    "height": 121
+                },
+                {
+                    "x": 0,
+                    "y": 136,
+                    "width": 96,
+                    "height": 108
+                },
+                {
+                    "x": 444,
+                    "y": 96,
+                    "width": 92,
+                    "height": 83
+                },
+                {
+                    "x": 650,
+                    "y": 436,
+                    "width": 98,
+                    "height": 80
+                }
+            ]
+        },
+        {
+            "id": 9,
+            "image1": "images/set9/image1.png",
+            "image2": "images/set9/image2.png",
+            "tags": [
+                "default"
+            ],
+            "difficulty": "medium",
+            "differences": [
+                {
+                    "x": 926,
+                    "y": 299,
+                    "width": 98,
+                    "height": 263
+                },
+                {
+                    "x": 22,
+                    "y": 916,
+                    "width": 205,
+                    "height": 108
+                },
+                {
+                    "x": 291,
+                    "y": 627,
+                    "width": 132,
+                    "height": 217
+                },
+                {
+                    "x": 2,
+                    "y": 511,
+                    "width": 131,
+                    "height": 69
+                },
+                {
+                    "x": 685,
+                    "y": 404,
+                    "width": 100,
+                    "height": 88
                 }
             ]
         }

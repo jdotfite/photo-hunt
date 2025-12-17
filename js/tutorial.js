@@ -384,17 +384,22 @@ class Tutorial {
         this.isActive = false;
         this.overlay.classList.remove('active');
         
-        // Reset game screen
-        const gameScreen = document.getElementById('gameScreen');
-        if (gameScreen) gameScreen.classList.add('hidden');
-        
         if (startGame) {
-            // Start the actual game
-            if (window.introScreen) {
-                window.introScreen.startGame();
+            // Start the actual game directly without going through intro screen
+            const gameScreen = document.getElementById('gameScreen');
+            if (gameScreen) {
+                gameScreen.classList.remove('hidden');
+                
+                // Trigger game start callback directly
+                if (window.introScreen && window.introScreen.onStart) {
+                    window.introScreen.onStart();
+                }
             }
         } else {
-            // Go back to intro screen
+            // Reset game screen and go back to intro screen
+            const gameScreen = document.getElementById('gameScreen');
+            if (gameScreen) gameScreen.classList.add('hidden');
+            
             const introScreen = document.getElementById('introScreen');
             if (introScreen) introScreen.classList.remove('hidden');
         }

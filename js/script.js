@@ -127,14 +127,31 @@ document.addEventListener("DOMContentLoaded", function() {
             const wrapper = imageElement.closest('.image-wrapper');
             if (wrapper) wrapper.classList.remove('loaded');
             
+            // Set timeout to prevent infinite loading
+            const timeout = setTimeout(() => {
+                imageElement.classList.remove('loading');
+                reject(new Error(`Image load timeout: ${src}`));
+            }, 10000); // 10 second timeout
+            
             imageElement.onload = () => {
+                clearTimeout(timeout);
                 // Remove loading class and add loaded to wrapper
                 imageElement.classList.remove('loading');
                 if (wrapper) wrapper.classList.add('loaded');
                 resolve(imageElement);
             };
-            imageElement.onerror = () => reject(new Error(`Failed to load image: ${src}`));
-            imageElement.src = src;
+            
+            imageElement.onerror = () => {
+                clearTimeout(timeout);
+                imageElement.classList.remove('loading');
+                reject(new Error(`Failed to load image: ${src}`));
+            };
+            
+            // Clear any previous src to force reload
+            imageElement.src = '';
+            // Force cache bust on error prone images
+            const cacheBuster = new Date().getTime();
+            imageElement.src = src.includes('?') ? `${src}&t=${cacheBuster}` : `${src}?t=${cacheBuster}`;
         });
     }
 
@@ -146,16 +163,41 @@ document.addEventListener("DOMContentLoaded", function() {
                 shuffledSets = shuffle(data.sets);
             }
 
+            // Check if player has completed all sets
+            if (round >= shuffledSets.length) {
+                // Player has completed all available sets - end game with victory
+                stopGame();
+                playSuccessSound(); // Victory sound
+                showTimedPopup("GAME COMPLETE!", 2500, () => {
+                    showGameOverPopup(score, resetGame);
+                });
+                return;
+            }
+
             const set = shuffledSets[round % shuffledSets.length];
 
             // Deep clone differences to avoid mutating the original data
             differences = set.differences.map(diff => ({ ...diff, found: false }));
             totalDifferences = differences.length;
 
-            await Promise.all([
-                loadImage(image1, set.image1),
-                loadImage(image2, set.image2)
-            ]);
+            try {
+                await Promise.all([
+                    loadImage(image1, set.image1),
+                    loadImage(image2, set.image2)
+                ]);
+            } catch (imageError) {
+                console.error('Error loading images:', imageError);
+                // Try to recover by skipping to next round
+                showTimedPopup("IMAGE LOAD ERROR", 1500, () => {
+                    round++;
+                    if (round >= shuffledSets.length) {
+                        showGameOverPopup(score, resetGame);
+                    } else {
+                        startRound();
+                    }
+                });
+                return;
+            }
 
             clearCanvasOverlays(image1);
             clearCanvasOverlays(image2);
@@ -164,6 +206,10 @@ document.addEventListener("DOMContentLoaded", function() {
 
         } catch (error) {
             console.error('Error loading differences:', error);
+            // Critical error - return to intro
+            showTimedPopup("LOAD ERROR", 1500, () => {
+                returnToIntro();
+            });
         }
     }
 
@@ -569,8 +615,29 @@ document.addEventListener("DOMContentLoaded", function() {
 
     function startNextRound() {
         round++;
-        roundNumberElement.textContent = round;
-        roundTime = Math.max(gameSettings.initialRoundTime * Math.pow(1 - gameSettings.roundTimeReduction, round - 1), gameSettings.initialRoundTime * gameSettings.minRoundTimeFactor);
+        
+        // Check if all sets have been completed
+        if (round >= shuffledSets.length) {
+            // Player completed all sets - show victory message and celebration
+            console.log(`All ${shuffledSets.length} sets completed!`);
+            stopGame();
+            playSuccessSound(); // Victory sound
+            
+            // Show celebration message
+            showTimedPopup("GAME COMPLETE!", 2500, () => {
+                // Go directly to high score entry flow
+                showGameOverPopup(score, resetGame);
+            });
+            return;
+        }
+        
+        roundNumberElement.textContent = round + 1; // Display as 1-based for users
+        roundTime = Math.max(gameSettings.initialRoundTime * Math.pow(1 - gameSettings.roundTimeReduction, round), gameSettings.initialRoundTime * gameSettings.minRoundTimeFactor);
+        
+        // Reset hints for the new round
+        hintsRemaining = 3;
+        hintIcons.forEach(icon => icon.classList.remove('used'));
+        
         setTimeout(startRound, 2000); // Delay before starting next round
     }
 
