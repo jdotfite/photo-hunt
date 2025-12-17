@@ -634,10 +634,6 @@ document.addEventListener("DOMContentLoaded", function() {
         roundNumberElement.textContent = round + 1; // Display as 1-based for users
         roundTime = Math.max(gameSettings.initialRoundTime * Math.pow(1 - gameSettings.roundTimeReduction, round), gameSettings.initialRoundTime * gameSettings.minRoundTimeFactor);
         
-        // Reset hints for the new round
-        hintsRemaining = 3;
-        hintIcons.forEach(icon => icon.classList.remove('used'));
-        
         setTimeout(startRound, 2000); // Delay before starting next round
     }
 
