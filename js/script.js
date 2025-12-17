@@ -158,7 +158,8 @@ document.addEventListener("DOMContentLoaded", function() {
     async function loadDifferences() {
         try {
             if (shuffledSets.length === 0) {
-                const response = await fetch(`data/sets.json`);
+                const cacheBuster = new Date().getTime();
+                const response = await fetch(`data/sets.json?t=${cacheBuster}`);
                 const data = await response.json();
                 shuffledSets = shuffle(data.sets);
             }
